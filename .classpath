@@ -13,5 +13,8 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="/home/blekione/Downloads/javax.persistence_2.0.0.jar"/>
+	<classpathentry kind="lib" path="/home/blekione/eclipse_link/eclipselink/jlib/eclipselink.jar"/>
+	<classpathentry kind="lib" path="/home/blekione/Downloads/mysql-connector-java-5.0.8/mysql-connector-java-5.0.8-bin.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
