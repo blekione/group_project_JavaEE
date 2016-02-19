@@ -9,7 +9,7 @@ public class Game {
   private String name;
   private String description;
   private int stock;
-  private int barcodeGS1;
+  private String barcodeGS1;
   private double price;
   private double pointMultiplier;
   private String pictureLocation;
@@ -22,7 +22,7 @@ public class Game {
     
   }
   
-  public Game (String name, String description, int stock, int barcodeGS1, 
+  public Game (String name, String description, int stock, String barcodeGS1, 
 	  double price, double pointMultiplier, String pictureLocation,
 	  double discount, Genre genre, Platform platform) {
     this.name = name;
@@ -62,11 +62,11 @@ public class Game {
     this.stock = stock;
   }
 
-  public int getBarcodeGS1() {
+  public String getBarcodeGS1() {
     return barcodeGS1;
   }
 
-  public void setBarcodeGS1(int barcodeGS1) {
+  public void setBarcodeGS1(String barcodeGS1) {
     this.barcodeGS1 = barcodeGS1;
   }
 
