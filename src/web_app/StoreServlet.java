@@ -13,12 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import domain.Game;
 import domain.Store;
 
-@WebServlet("/tes")
-public class IndexPage extends HttpServlet {
+@WebServlet("/store")
+public class StoreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     Store store; 
+    List<Game> discountedGames;
 	
-    public IndexPage() {
+    public StoreServlet() {
         super();
         store = Store.getInstance();
     }
@@ -28,23 +29,19 @@ public class IndexPage extends HttpServlet {
 		
 		getHtmlHead(request, response);
 		writer.append("\n\t\t<p>here is a body of index page<p>");
-		listDiscountGames(response);
+		listDiscountGames(request, response);
 		getHtmlFooter(response);
 	}
 
-	private void listDiscountGames(HttpServletResponse response) throws IOException {
+	private void listDiscountGames(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		PrintWriter writer = response.getWriter();
 		
-		List<Game> discountedGames = store.getDiscountedGames();
-		writer.append("\n\t\t<ul>");
-		for (Game game : discountedGames) {
-			writer.append("\n\t\t\t<li><a href=\"/product?id=")
-				.append(game.getBarcodeGS1() + "\">")
-				.append(game.getName())
-				.append("</a></li>");
-			
-		}
-		writer.append("\n\t\t</ul>");
+		discountedGames = store.getDiscountedGames();
+		
+		request.setAttribute("games", discountedGames);
+		
+		request.getRequestDispatcher("WEB-INF/jsp/view/test.jsp")
+			.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -53,17 +50,18 @@ public class IndexPage extends HttpServlet {
 	}
 	
 	private void getHtmlHead(HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
+			throws IOException, ServletException {
+		
 		PrintWriter writer =  response.getWriter();
 		writer.append("<!doctype html>")
 			.append("\n<html>")
 			.append("\n\t<head>")
 //			.append("\n\t\t<title>E-commerce</title>")
 			.append("\n\t\t<link rel=\"stylesheet\" type='text/css'")
-			.append(" href=\"" +request.getContextPath() +"/css/styles.css\" />")
+			.append(" href=\"" +request.getContextPath() +"/css/bootstrap.min.css\" />")
 			.append("\n\t</head>")
 			.append("\n\t<body>");
-	}
+		}
 	
 	private void getHtmlFooter(HttpServletResponse response) throws IOException {
 		PrintWriter writer =  response.getWriter();

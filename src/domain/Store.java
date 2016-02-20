@@ -20,23 +20,23 @@ public class Store {
 //	method for testing purpose will be deleted when database will be implemented
 		Game game1 = new Game("Call of Duty, Black Ops", 
 				"one of the best shooters ever blah blah blah",
-				20, "5030917085765", 35.00, 1.00, "n/a", 0.00, Genre.Shooter,
+				20, "5030917085765", 35.00, 1.00, "resources/game0.jpg", 0.00, Genre.Shooter,
 				Platform.XboxOne);
 		Game game2 = new Game("Minecraft", 
 				"why all people love Minceraft? blah blah blah",
-				15, "799007825272", 25.00, 1.00, "n/a", 30.00, Genre.Simulator,
+				15, "799007825272", 25.00, 1.00, "resources/game0.jpg", 30.00, Genre.Simulator,
 				Platform.XboxOne);
 		Game game3 = new Game("Tomb Rider", 
 				"Lara Croft in filled with action 2nd perspective adventure game",
-				20, "662248917689", 39.99, 1.00, "n/a", 15.00, Genre.Action, 
+				20, "662248917689", 39.99, 1.00, "resources/game0.jpg", 15.00, Genre.Action, 
 				Platform.XboxOne);
 		Game game4 = new Game("Fallout 4",
 				"next part of one of the best game sagas. Placed in postnuclear world",
-				30, "093155170421", 44.95, 1.00, "n/a", 20.00, Genre.Action,
+				30, "093155170421", 44.95, 1.00, "resources/game0.jpg", 20.00, Genre.Action,
 				Platform.XboxOne);
 		Game game5 = new Game("The Witcher 3",
 				"best game of 2015. period.",
-				45, "883929485123", 39.99, 1.00, "n/a", 20.00, Genre.Action,
+				45, "883929485123", 39.99, 1.00, "resources/game0.jpg", 20.00, Genre.Action,
 				Platform.XboxOne);
 		games = Arrays.asList(game1, game2, game3, game4, game5);
 	}
