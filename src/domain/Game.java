@@ -6,6 +6,7 @@ import domain.enumerations.Platform;
 public class Game {
   
 //Variables  
+	private int id;
   private String name;
   private String description;
   private int stock;
@@ -18,9 +19,7 @@ public class Game {
   private Platform platform;
  
 //Constructors  
-  public Game () {
-    
-  }
+  public Game () {}
   
   public Game (String name, String description, int stock, String barcodeGS1, 
 	  double price, double pointMultiplier, String pictureLocation,
@@ -117,5 +116,9 @@ public class Game {
   public void setPlatform(Platform platform) {
     this.platform = platform;
   } 
+  
+  public double getDiscountedPrice() {
+	  return (double) Math.round((getPrice() - getPrice()*getDiscount()* 0.01)* 100d) / 100d;
+  }
   
 }
