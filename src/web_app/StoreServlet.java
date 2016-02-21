@@ -16,8 +16,9 @@ import domain.Store;
 @WebServlet("/store")
 public class StoreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    Store store; 
-    List<Game> discountedGames;
+    
+	private Store store; 
+    private List<Game> discountedGames;
 	
     public StoreServlet() {
         super();
@@ -25,18 +26,43 @@ public class StoreServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PrintWriter writer = response.getWriter();
 		
-		getHtmlHead(request, response);
-		writer.append("\n\t\t<p>here is a body of index page<p>");
-		listDiscountGames(request, response);
-		getHtmlFooter(response);
+		String action = request.getParameter("action");
+		System.out.println("!!!!!!!!!!!!!! " + action);
+        if(action == null)
+            action = "main";
+        switch(action) {
+        	case "XboxOne": 
+        		listDiscountGamesPlatform(request, response, action);
+        		return;
+        	case "Playstation4": 
+        		listDiscountGamesPlatform(request, response, action);
+        		return;
+        	case "main":
+        	default:
+        		listDiscountGamesMain(request, response);
+        }
 	}
 
-	private void listDiscountGames(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		PrintWriter writer = response.getWriter();
+	private void listDiscountGamesPlatform(HttpServletRequest request, HttpServletResponse response, String action) throws ServletException, IOException {
 		
-		discountedGames = store.getDiscountedGames();
+		List<Game> platformGames = store.getPlatformGames(action);
+		discountedGames = store.getDiscountedGames(platformGames);
+//		String test = "pc";
+//	System.out.println(test.substring(0, 4));
+		
+		request.setAttribute("platformGames", platformGames);
+		request.setAttribute("discountedGames", discountedGames);
+		
+		
+		request.setAttribute("platform", action);
+		request.getRequestDispatcher("WEB-INF/jsp/view/platform.jsp")
+			.forward(request, response);
+	}
+
+	private void listDiscountGamesMain(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		
+		discountedGames = store.getDiscountedGames(null);
 		
 		request.setAttribute("games", discountedGames);
 		
@@ -47,25 +73,5 @@ public class StoreServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-	}
-	
-	private void getHtmlHead(HttpServletRequest request, HttpServletResponse response)
-			throws IOException, ServletException {
-		
-		PrintWriter writer =  response.getWriter();
-		writer.append("<!doctype html>")
-			.append("\n<html>")
-			.append("\n\t<head>")
-//			.append("\n\t\t<title>E-commerce</title>")
-			.append("\n\t\t<link rel=\"stylesheet\" type='text/css'")
-			.append(" href=\"" +request.getContextPath() +"/css/bootstrap.min.css\" />")
-			.append("\n\t</head>")
-			.append("\n\t<body>");
-		}
-	
-	private void getHtmlFooter(HttpServletResponse response) throws IOException {
-		PrintWriter writer =  response.getWriter();
-		writer.append("\n\t</body>")
-			.append("\n</html>");
 	}
 }

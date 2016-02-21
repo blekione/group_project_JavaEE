@@ -37,7 +37,7 @@ public class Store {
 		Game game5 = new Game("The Witcher 3",
 				"best game of 2015. period.",
 				45, "883929485123", 39.99, 1.00, "resources/game0.jpg", 20.00, Genre.Action,
-				Platform.XboxOne);
+				Platform.Playstation4);
 		games = Arrays.asList(game1, game2, game3, game4, game5);
 	}
 
@@ -48,10 +48,13 @@ public class Store {
 		return uniqueInstance;
 	}
 
-	public List<Game> getDiscountedGames() {
+	public List<Game> getDiscountedGames(List<Game> gamesList) {
 // TODO change it to query database, when applied
+		if (gamesList == null) {
+			gamesList = games;
+		}
 		List<Game> discountedGames= new ArrayList<>();
-		for (Game game : games) {
+		for (Game game : gamesList) {
 			if (game.getDiscount() > 0.00) {
 				discountedGames.add(game);
 			}
@@ -59,7 +62,18 @@ public class Store {
 				return discountedGames;
 			}
 		}
-		return null;
+		return discountedGames;
+	}
+
+	public List<Game> getPlatformGames(String platform) {
+// TODO change it to query database, when applied
+		List<Game> platformGames = new ArrayList<>();
+		for (Game game : games) {
+			if (game.getPlatform().toString().equals(platform)) {
+				platformGames.add(game);
+			}
+		}
+		return platformGames;
 	}
 	
 	public static List<Platform> getPlatformValues() {
