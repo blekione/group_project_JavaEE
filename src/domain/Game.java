@@ -6,7 +6,6 @@ import domain.enumerations.Platform;
 public class Game {
   
 //Variables  
-	private int id;
   private String name;
   private String description;
   private int stock;

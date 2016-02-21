@@ -62,4 +62,8 @@ public class Store {
 		return null;
 	}
 	
+	public static List<Platform> getPlatformValues() {
+		return Arrays.asList(Platform.values());
+	}
+	
 }
