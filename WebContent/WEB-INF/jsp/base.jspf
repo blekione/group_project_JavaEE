@@ -24,7 +24,8 @@
 		<ul class="nav navbar-nav">
 			<% for (Platform platform : platforms) { %>
 			<li><a href="<c:url value="/store">
-					<c:param name="action" value="<%= platform.toString() %>" />
+					<c:param name="action" value="category" />
+					<c:param name="platform" value="<%= platform.toString() %>" />
 					</c:url>" ><%= platform %></a></li>
 			<%} %>
 		</ul>

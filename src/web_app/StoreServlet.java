@@ -32,11 +32,9 @@ public class StoreServlet extends HttpServlet {
         if(action == null)
             action = "main";
         switch(action) {
-        	case "XboxOne": 
-        		listDiscountGamesPlatform(request, response, action);
-        		return;
-        	case "Playstation4": 
-        		listDiscountGamesPlatform(request, response, action);
+        	case "category": 
+        		String platform = request.getParameter("platform");
+        		listDiscountGamesPlatform(request, response, platform);
         		return;
         	case "main":
         	default:
@@ -44,18 +42,16 @@ public class StoreServlet extends HttpServlet {
         }
 	}
 
-	private void listDiscountGamesPlatform(HttpServletRequest request, HttpServletResponse response, String action) throws ServletException, IOException {
+	private void listDiscountGamesPlatform(HttpServletRequest request, HttpServletResponse response, String platform) throws ServletException, IOException {
 		
-		List<Game> platformGames = store.getPlatformGames(action);
+		List<Game> platformGames = store.getPlatformGames(platform);
 		discountedGames = store.getDiscountedGames(platformGames);
-//		String test = "pc";
-//	System.out.println(test.substring(0, 4));
 		
 		request.setAttribute("platformGames", platformGames);
 		request.setAttribute("discountedGames", discountedGames);
 		
 		
-		request.setAttribute("platform", action);
+		request.setAttribute("platform", platform);
 		request.getRequestDispatcher("WEB-INF/jsp/view/platform.jsp")
 			.forward(request, response);
 	}
