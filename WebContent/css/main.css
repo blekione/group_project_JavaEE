@@ -40,11 +40,12 @@
 
 .pull-right {
 	float: right;
-    margin-right: 98px; /*set margin this way in your custom styesheet*/
+    margin-right: 0px; /*set margin this way in your custom styesheet*/
   }
 
 .jumbotron.logo {
 	margin-bottom: 0px;
+	padding: 25px 10px;
 }
 
 .thumbnail> .caption {

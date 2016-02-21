@@ -40,7 +40,7 @@ public class StoreServlet extends HttpServlet {
 		
 		request.setAttribute("games", discountedGames);
 		
-		request.getRequestDispatcher("WEB-INF/jsp/view/test.jsp")
+		request.getRequestDispatcher("WEB-INF/jsp/view/main.jsp")
 			.forward(request, response);
 	}
 
