@@ -15,9 +15,10 @@
 							<a href="<c:url value="/product">
 								<c:param name="id" value="<%= game.getBarcodeGS1() %>" />
 								</c:url>"><%= game.getName() %></a>
-							<p><span class="label label-default"><strike>&#163;<%= game.getPrice() %></strike></span> <span class="label label-danger" role="alert">&#163;<%= game.getDiscountedPrice() %></span></p>
+							<p><span class="label label-default"><s>&#163;<%= game.getPrice() %></s></span> <span class="label label-danger" role="alert">&#163;<%= game.getDiscountedPrice() %></span></p>
 						</div>
 					</div>
+					<div class="ribbon blue"><span><%= game.getPlatform() %></span></div>
 				</div>
 				<%} %>
 			</div>
