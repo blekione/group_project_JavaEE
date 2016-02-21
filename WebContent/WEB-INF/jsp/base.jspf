@@ -15,3 +15,21 @@
         <script type="text/javascript" src="jquery/jquery-1.12.0.min.js"> </script>
         <script src="javascript/bootstrap.min.js"> </script>
 </head>
+<body>
+	<div class="jumbotron logo">
+    	<p>Dynamically blurring avatar images using</p>
+  	</div>
+	<nav class="navbar navbar-default">
+		<ul class="nav navbar-nav">
+			<li><a href="#">Xbox</a></li>
+			<li><a href="#">PlayStation</a></li>
+			<li><a href="#">PC</a></li>
+		</ul>
+ 	 	<div class="container-fluid pull-right">
+ 			<div class="collapse navbar-collapse"> 
+ 				<a href="#"><button type="button" class="btn btn-default navbar-btn">Log in</button></a>
+ 				<a href="#"><button type="button" class="btn btn-default navbar-btn">Sign in</button></a>
+ 				<a href="#"><button type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Basket</button></a>
+ 		 	</div> 
+ 		</div>
+ 	</nav>
