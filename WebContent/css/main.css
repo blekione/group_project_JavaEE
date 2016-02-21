@@ -47,6 +47,10 @@
 	margin-bottom: 0px;
 }
 
+.thumbnail> .caption {
+	padding: 5px;
+}
+
 .ribbon {
    position: absolute;
    right: 10px; top: -5px;
