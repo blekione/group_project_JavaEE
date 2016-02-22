@@ -37,8 +37,14 @@
     			<li class="row list-group-item">
       				<div class="col-md-2"><img src="<%= game.getPictureLocation() %>" alt="<%= game.getName() %>" ng-href="#"/></div>
       				<div class="col-md-10">
-      					<h4><a ng-href="#">Tweak Roster</a></h4>
-      					<p>Price:</p>
+      					<h4><a ng-href="#"><%= game.getName() %></a></h4>
+      					<p>Price: 
+      						<%if (game.getDiscount() > 0) { %>
+      						<span class="label label-default"><s>&#163;<%= game.getPrice() %></s></span>
+							<span class="label label-danger" role="alert">&#163;<%= game.getDiscountedPrice()%></span></p>
+							<% } else { %>
+							<span class="label label-default">&#163;<%= game.getPrice() %></span>
+							<% } %>
       					<p>Stock</p>
       				</div>
     			</li>
