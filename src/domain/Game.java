@@ -12,7 +12,8 @@ public class Game {
   private String barcodeGS1;
   private double price;
   private double pointMultiplier;
-  private String pictureLocation;
+  private String pathPictureThumbLocation;
+  private String pathPictureLocation;
   private double discount;
   private Genre genre;
   private Platform platform;
@@ -21,15 +22,16 @@ public class Game {
   public Game () {}
   
   public Game (String name, String description, int stock, String barcodeGS1, 
-	  double price, double pointMultiplier, String pictureLocation,
-	  double discount, Genre genre, Platform platform) {
+	  double price, double pointMultiplier, String pictureThumbLocation, 
+	  String pictureLocation, double discount, Genre genre, Platform platform) {
     this.name = name;
     this.description = description;
     this.stock = stock;
     this.barcodeGS1 = barcodeGS1;
     this.price = price;
     this.pointMultiplier = pointMultiplier;
-    this.pictureLocation = pictureLocation;
+    this.pathPictureThumbLocation = pictureThumbLocation;
+    this.pathPictureLocation = pictureLocation;
     this.discount = discount;
     this.genre = genre;
     this.platform = platform;
@@ -85,11 +87,11 @@ public class Game {
   }
 
   public String getPictureLocation() {
-    return pictureLocation;
+    return pathPictureThumbLocation;
   }
 
   public void setPictureLocation(String pictureLocation) {
-    this.pictureLocation = pictureLocation;
+    this.pathPictureThumbLocation = pictureLocation;
   }
 
   public double getDiscount() {
