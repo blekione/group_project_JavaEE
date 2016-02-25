@@ -34,7 +34,11 @@ public class StoreServlet extends HttpServlet {
         switch(action) {
         	case "category": 
         		String platform = request.getParameter("platform");
-        		listDiscountGamesPlatform(request, response, platform);
+        		listGamesForPlatform(request, response, platform);
+        		return;
+        	case "product":
+        		String productBarcode = request.getParameter("barcode");
+        		displayProductDetails(request,response, productBarcode);
         		return;
         	case "main":
         	default:
@@ -42,7 +46,15 @@ public class StoreServlet extends HttpServlet {
         }
 	}
 
-	private void listDiscountGamesPlatform(HttpServletRequest request, HttpServletResponse response, String platform) throws ServletException, IOException {
+	private void displayProductDetails(HttpServletRequest request, HttpServletResponse response,
+			String productBarcode) throws ServletException, IOException {
+
+		
+		request.getRequestDispatcher("WEB-INF/jsp/view/product.jsp")
+		.forward(request, response);
+	}
+
+	private void listGamesForPlatform(HttpServletRequest request, HttpServletResponse response, String platform) throws ServletException, IOException {
 		
 		List<Game> platformGames = store.getPlatformGames(platform);
 		discountedGames = store.getDiscountedGames(platformGames);

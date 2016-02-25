@@ -14,8 +14,9 @@
 				<div class="thumbnail">
 					<img src="<%= game.getPictureLocation() %>" alt="<%= game.getName() %>">
 					<div class="caption">
-						<a href="<c:url value="/product">
-							<c:param name="id" value="<%= game.getBarcodeGS1() %>" />
+						<a href="<c:url value="/store">
+							<c:param name="action" value="product" />
+							<c:param name="barcode" value="<%= game.getBarcodeGS1() %>" />
 							</c:url>"><%= game.getName()%></a>
 						<p>
 							<span class="label label-default"><s>&#163;<%= game.getPrice() %></s></span>
