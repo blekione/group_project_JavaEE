@@ -86,11 +86,11 @@ public class Game {
     this.pointMultiplier = pointMultiplier;
   }
 
-  public String getPictureLocation() {
+  public String getPathPictureThumbLocation() {
     return pathPictureThumbLocation;
   }
 
-  public void setPictureLocation(String pictureLocation) {
+  public void setPathPictureThumbLocation(String pictureLocation) {
     this.pathPictureThumbLocation = pictureLocation;
   }
 
@@ -121,5 +121,14 @@ public class Game {
   public double getDiscountedPrice() {
 	  return (double) Math.round((getPrice() - getPrice()*getDiscount()* 0.01)* 100d) / 100d;
   }
+
+public String getPathPictureLocation() {
+	return pathPictureLocation;
+}
+
+public void setPathPictureLocation(String pathPictureLocation) {
+	this.pathPictureLocation = pathPictureLocation;
+}
+  
   
 }

@@ -9,7 +9,7 @@
 			<% for(Game game : games) { %>
 			<div class="col-xs-6 col-md-2 list-group-item-text">
 			<div class="thumbnail">
-				<img src="<%= game.getPictureLocation() %>" alt="<%= game.getName() %>">
+				<img src="<%= game.getPathPictureThumbLocation() %>" alt="<%= game.getName() %>">
 				<div class="caption">
 					<a href="<c:url value="/store">
 						<c:param name="action" value="product" />

@@ -87,11 +87,9 @@ public class Store {
 
 	public Game getGame(String productBarcode) {
 // TODO change into database query when database is implemented
-		System.out.println("barcode input: " + productBarcode);
 		for (Game game : games) {
 			if (game.getBarcodeGS1().equals(productBarcode)) {
 				System.out.println(game.getBarcodeGS1().getClass());
-				System.out.println("found game");
 				return game;
 			}
 		}

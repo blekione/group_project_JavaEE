@@ -12,7 +12,7 @@
 			<% for(Game game : discountedGames) { %>
 			<div class="col-xs-6 col-md-2 list-group-item-text">
 				<div class="thumbnail">
-					<img src="<%= game.getPictureLocation() %>" alt="<%= game.getName() %>">
+					<img src="<%= game.getPathPictureThumbLocation()%>" alt="<%= game.getName() %>">
 					<div class="caption">
 						<a href="<c:url value="/store">
 							<c:param name="action" value="product" />
@@ -36,7 +36,7 @@
 			<ul class="list-group">
 				<% for (Game game : platformGames) {%>
     			<li class="row list-group-item">
-      				<div class="col-md-2"><img src="<%= game.getPictureLocation() %>" alt="<%= game.getName() %>" ng-href="#"/></div>
+      				<div class="col-md-2"><img src="<%= game.getPathPictureThumbLocation() %>" alt="<%= game.getName() %>" ng-href="#"/></div>
       				<div class="col-md-10">
       					<h4><a ng-href="#"><%= game.getName() %></a></h4>
       					<p>Price: 
