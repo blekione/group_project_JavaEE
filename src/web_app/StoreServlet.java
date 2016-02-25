@@ -48,8 +48,9 @@ public class StoreServlet extends HttpServlet {
 
 	private void displayProductDetails(HttpServletRequest request, HttpServletResponse response,
 			String productBarcode) throws ServletException, IOException {
-
 		
+		Game game = store.getGame(productBarcode);
+		request.setAttribute("game", game);
 		request.getRequestDispatcher("WEB-INF/jsp/view/product.jsp")
 		.forward(request, response);
 	}
