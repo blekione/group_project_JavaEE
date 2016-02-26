@@ -1,47 +1,6 @@
-.header_top{
-    background-color: red;
-    height: 100px; 
-    
-    
+.navbar-right {
+	margin: 0 5px;
 }
-
-.rowpadding{
-    margin-left: 100px;
-    margin-right: 100px;
-     
-   
-}
-
-.rowpadding1{
-    margin-left: 100px;
-    margin-right: 100px;
-    
-   
-}
-
-
-.header_bottom{
-    background-color: blue;
-    height: 40px;
-    
-}
-
-.header_navigation{
-    background-color: red;
-    height: 120px;
-    top: 10px;
-}
-
-.top_row_style{
-    background-color: blue;
-    height: 100px;
-    
-}
-
-.pull-right {
-	float: right;
-    margin-right: 0px; /*set margin this way in your custom styesheet*/
-  }
 
 .jumbotron.logo {
 	margin-bottom: 0px;

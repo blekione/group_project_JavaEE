@@ -6,7 +6,7 @@
 	List<Game> platformGames = (List)request.getAttribute("platformGames");
 	%>
 	
-  	<div class="container panel panel-default">
+  	<div class="container-fluid panel panel-default">
   		<div class="panel-heading row"><h3 class="panel-title">Games with discount</h3></div>
 		<div class="panel-body">
 			<% for(Game game : discountedGames) { %>
@@ -36,9 +36,12 @@
 			<ul class="list-group">
 				<% for (Game game : platformGames) {%>
     			<li class="row list-group-item">
-      				<div class="col-md-2"><img src="<%= game.getPathPictureThumbLocation() %>" alt="<%= game.getName() %>" ng-href="#"/></div>
-      				<div class="col-md-10">
-      					<h4><a ng-href="#"><%= game.getName() %></a></h4>
+      				<div class="col col-md-2"><img src="<%= game.getPathPictureThumbLocation() %>" alt="<%= game.getName() %>" ng-href="#"/></div>
+      				<div class="col col-md-10">
+      					<h4><a href="<c:url value="/store">
+							<c:param name="action" value="product" />
+							<c:param name="barcode" value="<%= game.getBarcodeGS1() %>" />
+							</c:url>"><%= game.getName()%></a></h4>
       					<p>Price: 
       						<%if (game.getDiscount() > 0) { %>
       						<span class="label label-default"><s>&#163;<%= game.getPrice() %></s></span>
@@ -52,5 +55,6 @@
     			<% } %>
 			</ul>
 		</div>			
+</div>
 </div>
 </body>
