@@ -1,4 +1,4 @@
-<%@ page session="false"  import="java.util.List, domain.Game" %>
+<%@ page session="true"  import="java.util.List, domain.Game" %>
 
 <% 
 	List<Game> games = (List)request.getAttribute("games");

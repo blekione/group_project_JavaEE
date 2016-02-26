@@ -1,4 +1,4 @@
-<%@ page session="false"  import="domain.Game" %>
+<%@ page session="true"  import="domain.Game" %>
 
 <% 
 	Game game = (Game)request.getAttribute("game");

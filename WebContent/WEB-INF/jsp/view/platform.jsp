@@ -1,4 +1,4 @@
-<%@ page session="false"  import="java.util.List, domain.Game" %>
+<%@ page session="true"  import="java.util.List, domain.Game" %>
 
 <% 
 	String platform = (String)request.getAttribute("platform");
