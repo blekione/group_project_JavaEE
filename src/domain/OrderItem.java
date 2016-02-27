@@ -1,10 +1,16 @@
 package domain;
 
-public class OrderItem extends Order {
+public class OrderItem {
   
-  @Override
-  public double calculateTotalPrice () {
-    return 0.0;
-  }
-  
+	private int positionNumber;
+	private int quantity;
+	private Game item;
+	
+	public OrderItem (int positionNumber, int quantity, Game item){
+		this.positionNumber = positionNumber;
+		this.quantity = quantity;
+		this.item = item;
+	}
+	
+	public Integer getId() { return this.positionNumber; }
 }
