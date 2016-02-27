@@ -15,72 +15,75 @@ import domain.Store;
 
 @WebServlet("/store")
 public class StoreServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+
+  private static final long serialVersionUID = 1L;
+
+  private Store store;
+  private List<Game> discountedGames;
+
+  public StoreServlet() {
+    super();
+    store = Store.getInstance();
+  }
+
+  @Override
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     
-	private Store store; 
-    private List<Game> discountedGames;
-	
-    public StoreServlet() {
-        super();
-        store = Store.getInstance();
+    String action = request.getParameter("action");
+//    System.out.println("!!!!!!!!!!!!!! " + action);
+    if (action == null) {
+      action = "main";
     }
+    switch (action) {
+      case "category":
+	String platform = request.getParameter("platform");
+	listGamesForPlatform(request, response, platform);
+	return;
+      case "product":
+	String productBarcode = request.getParameter("barcode");
+	displayProductDetails(request, response, productBarcode);
+	return;
+      case "main":
+      default:
+	listDiscountGamesMain(request, response);
+    }
+  }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String action = request.getParameter("action");
-		System.out.println("!!!!!!!!!!!!!! " + action);
-        if(action == null)
-            action = "main";
-        switch(action) {
-        	case "category": 
-        		String platform = request.getParameter("platform");
-        		listGamesForPlatform(request, response, platform);
-        		return;
-        	case "product":
-        		String productBarcode = request.getParameter("barcode");
-        		displayProductDetails(request,response, productBarcode);
-        		return;
-        	case "main":
-        	default:
-        		listDiscountGamesMain(request, response);
-        }
-	}
+  private void displayProductDetails(HttpServletRequest request, HttpServletResponse response,
+	  String productBarcode) throws ServletException, IOException {
 
-	private void displayProductDetails(HttpServletRequest request, HttpServletResponse response,
-			String productBarcode) throws ServletException, IOException {
-		
-		Game game = store.getGame(productBarcode);
-		request.setAttribute("game", game);
-		request.getRequestDispatcher("WEB-INF/jsp/view/product.jsp")
-		.forward(request, response);
-	}
+    Game game = store.getGame(productBarcode);
+    request.setAttribute("game", game);
+    request.getRequestDispatcher("WEB-INF/jsp/view/product.jsp")
+	    .forward(request, response);
+  }
 
-	private void listGamesForPlatform(HttpServletRequest request, HttpServletResponse response, String platform) throws ServletException, IOException {
-		
-		List<Game> platformGames = store.getPlatformGames(platform);
-		discountedGames = store.getDiscountedGames(platformGames);
-		
-		request.setAttribute("platformGames", platformGames);
-		request.setAttribute("discountedGames", discountedGames);
-		
-		
-		request.setAttribute("platform", platform);
-		request.getRequestDispatcher("WEB-INF/jsp/view/platform.jsp")
-			.forward(request, response);
-	}
+  private void listGamesForPlatform(HttpServletRequest request, HttpServletResponse response, String platform) throws ServletException, IOException {
 
-	private void listDiscountGamesMain(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		
-		discountedGames = store.getDiscountedGames(null);
-		
-		request.setAttribute("games", discountedGames);
-		
-		request.getRequestDispatcher("WEB-INF/jsp/view/main.jsp")
-			.forward(request, response);
-	}
+    List<Game> platformGames = store.getPlatformGames(platform);
+    discountedGames = store.getDiscountedGames(platformGames);
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+    request.setAttribute("platformGames", platformGames);
+    request.setAttribute("discountedGames", discountedGames);
+
+    request.setAttribute("platform", platform);
+    request.getRequestDispatcher("WEB-INF/jsp/view/platform.jsp")
+	    .forward(request, response);
+  }
+
+  private void listDiscountGamesMain(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+    discountedGames = store.getDiscountedGames(null);
+
+    request.setAttribute("games", discountedGames);
+
+    request.getRequestDispatcher("WEB-INF/jsp/view/main.jsp")
+	    .forward(request, response);
+  }
+
+  @Override
+  protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    // TODO Auto-generated method stub
+    doGet(request, response);
+  }
 }

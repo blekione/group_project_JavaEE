@@ -2,27 +2,42 @@ package domain;
 
 import domain.enumerations.Genre;
 import domain.enumerations.Platform;
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-public class Game {
-  
-//Variables  
+@Entity
+@Table(name = "GAMES")
+public class Game implements Serializable {
+
+//Variables 
   private String name;
   private String description;
   private int stock;
+
+  @Id
   private String barcodeGS1;
   private double price;
   private double pointMultiplier;
   private String pathPictureThumbLocation;
   private String pathPictureLocation;
   private double discount;
+
+  @Enumerated(EnumType.STRING)
   private Genre genre;
+
+  @Enumerated(EnumType.STRING)
   private Platform platform;
- 
+
 //Constructors  
-  public Game () {}
-  
-  public Game (String name, String description, int stock, String barcodeGS1, 
-	  double price, double pointMultiplier, String pictureThumbLocation, 
+  public Game() {
+  }
+
+  public Game(String name, String description, int stock, String barcodeGS1,
+	  double price, double pointMultiplier, String pictureThumbLocation,
 	  String pictureLocation, double discount, Genre genre, Platform platform) {
     this.name = name;
     this.description = description;
@@ -36,7 +51,7 @@ public class Game {
     this.genre = genre;
     this.platform = platform;
   }
-  
+
 //Getters and Setters
   public String getName() {
     return name;
@@ -116,19 +131,22 @@ public class Game {
 
   public void setPlatform(Platform platform) {
     this.platform = platform;
-  } 
-  
-  public double getDiscountedPrice() {
-	  return (double) Math.round((getPrice() - getPrice()*getDiscount()* 0.01)* 100d) / 100d;
   }
 
-public String getPathPictureLocation() {
-	return pathPictureLocation;
-}
+  public double getDiscountedPrice() {
+    return (double) Math.round((getPrice() - getPrice() * getDiscount() * 0.01) * 100d) / 100d;
+  }
 
-public void setPathPictureLocation(String pathPictureLocation) {
-	this.pathPictureLocation = pathPictureLocation;
-}
+  public String getPathPictureLocation() {
+    return pathPictureLocation;
+  }
+
+  public void setPathPictureLocation(String pathPictureLocation) {
+    this.pathPictureLocation = pathPictureLocation;
+  }
   
-  
+  @Override
+  public String toString () {
+    return "Game: " + name;
+  }
 }

@@ -1,7 +1,6 @@
 package domain;
 
 public class Address {
-  
 //Variables
   private int houseNumber;
   private String street;

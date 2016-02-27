@@ -1,99 +1,53 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import domain.enumerations.Genre;
 import domain.enumerations.Platform;
 
 public class Store {
 
-	private static Store uniqueInstance;
-	List<Game> games;
-	
-	private Store() {
-		test();
-	}
-	
-	private void test() {
-//	method for testing purpose will be deleted when database will be implemented
-		Game game1 = new Game("Call of Duty, Black Ops", 
-				"one of the best shooters ever blah blah blah",
-				20, "5030917085765", 35.00, 1.00, "resources/images/game0.jpg",
-				"resources/images/game0.jpg", 0.00, Genre.Shooter, 
-				Platform.XboxOne);
-		Game game2 = new Game("Minecraft", 
-				"why all people love Minceraft? blah blah blah",
-				15, "799007825272", 25.00, 1.00, "resources/images/game0.jpg", 
-				"resources/images/game0.jpg", 30.00, Genre.Simulator,
-				Platform.XboxOne);
-		Game game3 = new Game("Tomb Rider", 
-				"Lara Croft in filled with action 2nd perspective adventure game",
-				20, "662248917689", 39.99, 1.00, "resources/images/game0.jpg",
-				"resources/images/game0.jpg", 15.00, Genre.Action, 
-				Platform.XboxOne);
-		Game game4 = new Game("Fallout 4",
-				"next part of one of the best game sagas. Placed in postnuclear world",
-				30, "093155170421", 44.95, 1.00, "resources/images/game0.jpg",
-				"resources/images/game0.jpg", 20.00, Genre.Action,
-				Platform.XboxOne);
-		Game game5 = new Game("The Witcher 3",
-				"best game of 2015. period.",
-				45, "883929485123", 39.99, 1.00, "resources/images/game0.jpg",
-				"resources/images/game0.jpg", 20.00, Genre.Action,
-				Platform.Playstation4);
-		games = Arrays.asList(game1, game2, game3, game4, game5);
-	}
+  private static Store uniqueInstance;
+  private Database database;
+  List<Game> games;
 
-	public static Store getInstance() {
-		if (uniqueInstance == null) {
-			uniqueInstance = new Store();
-		}
-		return uniqueInstance;
-	}
+  private Store() {
+    getDatabase();
+  }
 
-	public List<Game> getDiscountedGames(List<Game> gamesList) {
-// TODO change it to query database, when applied
-		if (gamesList == null) {
-			gamesList = games;
-		}
-		List<Game> discountedGames= new ArrayList<>();
-		for (Game game : gamesList) {
-			if (game.getDiscount() > 0.00) {
-				discountedGames.add(game);
-			}
-			if (discountedGames.size() == 4) {
-				return discountedGames;
-			}
-		}
-		return discountedGames;
-	}
+  public static Store getInstance() {
+    if (uniqueInstance == null) {
+      uniqueInstance = new Store();
+    }
+    return uniqueInstance;
+  }
+  
+  private Database getDatabase() {
+    if (database == null) {
+      database = new Database();
+    }
+    return database;
+  }
 
-	public List<Game> getPlatformGames(String platform) {
-// TODO change it to query database, when applied
-		List<Game> platformGames = new ArrayList<>();
-		for (Game game : games) {
-			if (game.getPlatform().toString().equals(platform)) {
-				platformGames.add(game);
-			}
-		}
-		return platformGames;
-	}
-	
-	public static List<Platform> getPlatformValues() {
-		return Arrays.asList(Platform.values());
-	}
+  public List<Game> getDiscountedGames(List<Game> gamesList) {
+    return database.retrieveDiscounts();
+  }
 
-	public Game getGame(String productBarcode) {
+  public List<Game> getPlatformGames(String platform) {
+    return database.retrievePlatform(platform);
+  }
+
+  public static List<Platform> getPlatformValues() {
+    return Arrays.asList(Platform.values());
+  }
+
+  public Game getGame(String productBarcode) {
 // TODO change into database query when database is implemented
-		for (Game game : games) {
-			if (game.getBarcodeGS1().equals(productBarcode)) {
-				System.out.println(game.getBarcodeGS1().getClass());
-				return game;
-			}
-		}
-		return null;
-	}
-	
+    for (Game game : games) {
+      if (game.getBarcodeGS1().equals(productBarcode)) {
+	System.out.println(game.getBarcodeGS1().getClass());
+	return game;
+      }
+    }
+    return null;
+  }
 }
