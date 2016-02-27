@@ -2,5 +2,6 @@ package domain.enumerations;
 
 public enum Genre { 
   Shooter, Simulator, Action, 
-  Adventure, Racing, Strategy
+  Adventure, Racing, Strategy,
+  Sports
 }
