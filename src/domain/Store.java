@@ -28,7 +28,7 @@ public class Store {
     return database;
   }
 
-  public List<Game> getDiscountedGames(List<Game> gamesList) {
+  public List<Game> getDiscountedGames() {
     return database.retrieveDiscounts();
   }
 

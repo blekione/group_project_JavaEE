@@ -1,9 +1,9 @@
-<%@ page session="false"  import="java.util.List, domain.Game" %>
+<%@ page session="true"  import="java.util.List, domain.Game" %>
 
 <% 
 	List<Game> games = (List)request.getAttribute("games");
 	%>
-<div class="container panel panel-default">
+<div class="container-fluid panel panel-default">
 	<div class="panel-heading row"><h3 class="panel-title">Games with discount</h3></div>	
 		<div class="panel-body">
 			<% for(Game game : games) { %>
@@ -25,5 +25,6 @@
 		</div>
 		<%} %>
 	</div>
+</div>
 </div>
 </body>

@@ -1,8 +1,6 @@
 package web_app;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import domain.Game;
 import domain.Store;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet("/store")
 public class StoreServlet extends HttpServlet {
@@ -61,10 +61,18 @@ public class StoreServlet extends HttpServlet {
   private void listGamesForPlatform(HttpServletRequest request, HttpServletResponse response, String platform) throws ServletException, IOException {
 
     List<Game> platformGames = store.getPlatformGames(platform);
-    discountedGames = store.getDiscountedGames(platformGames);
+    discountedGames = store.getDiscountedGames();
+    
+    List<Game> platformDiscounts = new ArrayList<>();
+    
+    for (Game game: discountedGames) {
+      if (game.getPlatform().toString().equals(platform)) {
+	platformDiscounts.add(game);
+      }
+    }
 
     request.setAttribute("platformGames", platformGames);
-    request.setAttribute("discountedGames", discountedGames);
+    request.setAttribute("discountedGames", platformDiscounts);
 
     request.setAttribute("platform", platform);
     request.getRequestDispatcher("WEB-INF/jsp/view/platform.jsp")
@@ -73,7 +81,7 @@ public class StoreServlet extends HttpServlet {
 
   private void listDiscountGamesMain(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-    discountedGames = store.getDiscountedGames(null);
+    discountedGames = store.getDiscountedGames();
 
     request.setAttribute("games", discountedGames);
 
