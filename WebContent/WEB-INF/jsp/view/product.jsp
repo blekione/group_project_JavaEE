@@ -6,7 +6,7 @@
 	
 	
 
-	<div class="row">
+	<div class="container-fluid row">
 		<div class="col-xs-6 col-md-3">
 			<img src="<%= game.getPathPictureLocation() %>" alt="<%= game.getName() %>" width=300px>
 		</div>
@@ -40,12 +40,26 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-xs-6 col-md-2">
-			<a href="<c:url value="/store">
-						<c:param name="action" value="addToBasket" />
-						<c:param name="barcode" value="<%= game.getBarcodeGS1() %>"/>
-					</c:url>" class="btn btn-info" alt="Add to shopping basket">Add to basket</a>
-		</div>
+		<form  action="store"  method="POST" class="col-xs-6 col-md-2 form-horizontal " id="basket">
+			<div class="form-group">
+    			<label for="quantity" class="col-sm-4 control-label">Quantity:</label>
+   				<div class="col-sm-5">
+      				<select class="form-control" name="quantity">
+  						<option>1</option>
+  						<option>2</option>
+  						<option>3</option>
+  						<option>4</option>
+  						<option>5</option>
+					</select>
+    			</div>
+    		</div>
+    		<input type="hidden" name="action" value="addToBasket"/>
+    		<input type="hidden" name="barcode" value="<%= game.getBarcodeGS1() %>"/>
+    		<div class="form-group">
+    			<div class="col-sm-offset-2 col-sm-10">
+      			<button type="submit" class="btn btn-info" alt="Add to shopping basket">Add to basket <span class="badge"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></span></button>
+    		</div>
+    	</form>
 	</div>
 </div>	
 </body>

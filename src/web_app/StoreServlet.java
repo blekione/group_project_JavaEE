@@ -27,8 +27,8 @@ public class StoreServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String productBarcode;
 		String action = request.getParameter("action");
-		System.out.println("!!!!!!!!!!!!!! " + action);
         if(action == null)
             action = "main";
         switch(action) {
@@ -37,13 +37,24 @@ public class StoreServlet extends HttpServlet {
         		listGamesForPlatform(request, response, platform);
         		return;
         	case "product":
-        		String productBarcode = request.getParameter("barcode");
+        		productBarcode = request.getParameter("barcode");
         		displayProductDetails(request,response, productBarcode);
+        		return;
+        	case "addToBasket":
+        		productBarcode = request.getParameter("barcode");
+        		addToBasket(request, response, productBarcode);
         		return;
         	case "main":
         	default:
         		listDiscountGamesMain(request, response);
         }
+	}
+
+	private void addToBasket(HttpServletRequest request, HttpServletResponse response, String productBarcode) throws ServletException, IOException {
+		
+		System.out.println("in add to basket");
+		
+		this.listGamesForPlatform(request, response, "XboxOne");
 	}
 
 	private void displayProductDetails(HttpServletRequest request, HttpServletResponse response,
