@@ -66,7 +66,6 @@
 .pl span::before {border-left-color: #1e5799; border-top-color: #1e5799;}
 .pl span::after {border-right-color: #1e5799; border-top-color: #1e5799;}
 
-@alert-message-background: @brand-info;
 #basket {
 	padding: 10px;
 	background-color: #f8f8f8;
