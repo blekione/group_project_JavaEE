@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="web_app.StoreServlet, domain.enumerations.Platform, domain.Store, java.util.List" %>
+<%@ page import="web_app.StoreServlet, domain.enumerations.Platform, domain.Store, java.util.List, domain.ShoppingCart" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<% List<Platform> platforms = Store.getPlatformValues(); %>
+<% List<Platform> platforms = Store.getPlatformValues();
+	ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -35,6 +36,14 @@
  			<div class="nav navbar-nav navbar-right"> 
  				<a href="#" type="button" class="btn btn-default navbar-btn">Log in</a>
  				<a href="#" type="button" class="btn btn-default navbar-btn">Sign in</a>
- 				<a href="#" type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Basket <span class="badge">4</span></a>
+ 				<a href="<c:url value="/store">
+						<c:param name="action" value="viewBasket" />
+						</c:url>" type="button" class="btn btn-default navbar-btn">
+ 					<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> 
+ 					Basket 
+ 					<%if (cart != null && cart.getSize() != 0) {%>
+ 						<span class="badge"><%= cart.getSize() %></span>
+ 					<%} %>
+ 				</a>
  		 	</div> 
  	</nav>

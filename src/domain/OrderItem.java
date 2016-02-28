@@ -2,15 +2,17 @@ package domain;
 
 public class OrderItem {
   
-	private int positionNumber;
 	private int quantity;
 	private Game item;
 	
-	public OrderItem (int positionNumber, int quantity, Game item){
-		this.positionNumber = positionNumber;
+	public OrderItem (int quantity, Game item){
 		this.quantity = quantity;
 		this.item = item;
 	}
+		
+	public Game getItem() {return this.item;}
 	
-	public Integer getId() { return this.positionNumber; }
-}
+	public int getQuantity() {return this.quantity;}
+	
+	public void setQuantity(int quantity) { this.quantity = quantity;}
+ }

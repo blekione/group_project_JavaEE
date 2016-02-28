@@ -4,7 +4,19 @@
 	String platform = (String)request.getAttribute("platform");
 	List<Game> discountedGames = (List)request.getAttribute("discountedGames");
 	List<Game> platformGames = (List)request.getAttribute("platformGames");
+	Boolean success = (Boolean)request.getAttribute("success");
 	%>
+	
+	<% if (success) { success = false; %>
+    <div class="container alert alert-success">
+    	<p><strong>Congratulation!!</strong> You successfully added item to shopping cart.</p>
+    	<p>Please continue your shopping or 
+    		<a href="<c:url value="/store">
+						<c:param name="action" value="viewBasket" />
+						</c:url>"><strong>go to your basket</strong></a>
+			 to checkout.</p>
+    </div>			
+    <% } %>
 	
   	<div class="container-fluid panel panel-default">
   		<div class="panel-heading row"><h3 class="panel-title">Games with discount</h3></div>
