@@ -38,12 +38,17 @@
  				<a href="#" type="button" class="btn btn-default navbar-btn">Sign in</a>
  				<a href="<c:url value="/store">
 						<c:param name="action" value="viewBasket" />
-						</c:url>" type="button" class="btn btn-default navbar-btn">
+						</c:url>" type="button" 
+						<%if (cart != null && cart.getSize() != 0) {%>
+						class="btn btn-default navbar-btn">
  					<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> 
  					Basket 
- 					<%if (cart != null && cart.getSize() != 0) {%>
- 						<span class="badge"><%= cart.getSize() %></span>
- 					<%} %>
+ 					<span class="badge"><%= cart.getSize() %></span>
+ 					<%}else {%>
+ 						class="btn btn-default navbar-btn  disabled">
+ 					<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> 
+ 					Basket 
+ 					<%} %></a>
  				</a>
  		 	</div> 
  	</nav>

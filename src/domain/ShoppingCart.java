@@ -37,4 +37,8 @@ public class ShoppingCart {
  
 	public int getSize() { return cartItems.size();}
 	
+	public List<OrderItem> getBasket() {
+		return new ArrayList<>(cartItems.values());
+	}
+	
 }

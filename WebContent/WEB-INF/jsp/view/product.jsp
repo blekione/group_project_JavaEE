@@ -40,7 +40,7 @@
 				</div>
 			</div>
 		</div>
-		<form  action="store"  method="POST" class="col-xs-6 col-md-2 form-horizontal " id="basket">
+		<form  action="store"  method="POST" class="col-xs-6 col-md-2 form-horizontal" id="basket">
 			<div class="form-group">
     			<label for="quantity" class="col-sm-4 control-label">Quantity:</label>
    				<div class="col-sm-5">
