@@ -65,7 +65,7 @@ public class StoreServlet extends HttpServlet {
 	private void viewBasket(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("WEB-INF/jsp/view/basket.jsp")
 		.forward(request, response);
-		request.getSession().invalidate();
+//		request.getSession().invalidate();
 	}
 
 	private void addToBasket(HttpServletRequest request, HttpServletResponse response) throws IOException {
