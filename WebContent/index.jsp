@@ -1,2 +1,2 @@
- <%@ page session="false" %>
+ <%@ page session="true" %>
 <c:redirect url="/store" />

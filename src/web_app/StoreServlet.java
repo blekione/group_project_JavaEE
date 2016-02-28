@@ -24,6 +24,7 @@ public class StoreServlet extends HttpServlet {
 	private Store store;
 	private List<Game> discountedGames;
 	boolean success = false;
+	HttpSession session;
 
 	public StoreServlet() {
 		super();
@@ -33,6 +34,7 @@ public class StoreServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("success", success);
+		session = request.getSession();
 		
 		String action = request.getParameter("action");
 		
@@ -63,11 +65,10 @@ public class StoreServlet extends HttpServlet {
 	private void viewBasket(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("WEB-INF/jsp/view/basket.jsp")
 		.forward(request, response);
+		request.getSession().invalidate();
 	}
 
 	private void addToBasket(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		
-		HttpSession session = request.getSession();
 				
 		String gameBarcode = "";
 		int quantity = 0;
