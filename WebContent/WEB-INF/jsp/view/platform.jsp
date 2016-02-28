@@ -9,7 +9,7 @@
 	
 	<% if (success) { success = false; %>
     <div class="container alert alert-success">
-    	<p><strong>Congratulation!!</strong> You successfully added item to shopping cart.</p>
+    	<p><strong>Congratulation!</strong> You successfully added an item to the shopping cart.</p>
     	<p>Please continue your shopping or 
     		<a href="<c:url value="/store">
 						<c:param name="action" value="viewBasket" />
@@ -19,7 +19,7 @@
     <% } %>
 	
   	<div class="container-fluid panel panel-default">
-  		<div class="panel-heading row"><h3 class="panel-title">Games with discount</h3></div>
+  		<div class="panel-heading row"><h3 class="panel-title">Discounted Games</h3></div>
 		<div class="panel-body">
 			<% for(Game game : discountedGames) { %>
 			<div class="col-xs-6 col-md-2 list-group-item-text">
@@ -61,7 +61,7 @@
 							<% } else { %>
 							<span class="label label-default">&#163;<%= game.getPrice() %></span>
 							<% } %>
-      					<p>Stock</p>
+							<p>Stock <span class="label label-default"><%= game.getStock()%></span> </p>
       				</div>
     			</li>
     			<% } %>
