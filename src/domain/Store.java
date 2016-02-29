@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import domain.enumerations.Platform;
@@ -29,10 +30,18 @@ public class Store {
   }
 
   public List<Game> getDiscountedGames() {
-    return database.retrieveDiscounts();
+	List<Game> gamesWithDiscount = database.retrieveDiscounts();
+	List<Game> gamesSix = new ArrayList<>();
+	if (gamesWithDiscount.size() > 6) {
+		for (int i =0; i < 6; i++) {
+			gamesSix.add(gamesWithDiscount.get(i));
+		}
+		gamesWithDiscount = gamesSix;
+	}
+    return gamesWithDiscount;
   }
 
-  public List<Game> getPlatformGames(String platform) {
+  public List<Game> getPlatformGames(String platform) { 
     return database.retrievePlatform(platform);
   }
 
