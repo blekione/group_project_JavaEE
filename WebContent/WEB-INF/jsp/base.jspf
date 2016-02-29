@@ -40,7 +40,7 @@
 						<c:param name="action" value="viewBasket" />
 						</c:url>" type="button" 
 						<%if (cart != null && cart.getSize() != 0) {%>
-						class="btn btn-default navbar-btn">
+						class="btn btn-success navbar-btn">
  					<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> 
  					Basket 
  					<span class="badge"><%= cart.getSize() %></span>
