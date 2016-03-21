@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 import domain.enumerations.Title;
 
 public class Customer {
@@ -15,6 +17,7 @@ public class Customer {
   private String loyaltyAccount;
   private int telephoneNumber;
   private String ipAddress;
+  private List<Order> orders;
   
 //Constructors
   public Customer () {
@@ -117,4 +120,11 @@ public class Customer {
     this.title = title;
   }
   
+  public void addOrder(Order order) {
+	  this.orders.add(order);
+  }
+  
+  public List<Order> getOrders() {
+	  return this.orders;
+  }
 }

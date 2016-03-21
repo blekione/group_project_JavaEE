@@ -17,7 +17,8 @@
 							<h5><a href="<c:url value="/store">
 								<c:param name="action" value="product" />
 								<c:param name="barcode" value="<%= game.getBarcodeGS1() %>" />
-								</c:url>"><%= game.getName()%></a></h5>
+								</c:url>"><%= game.getName()%></a>
+							</h5>
       						<p>Price: 
       						<%if (game.getDiscount() > 0) { %>
       							<span class="label label-default"><s>&#163;<%= game.getPrice() %></s></span>
@@ -25,7 +26,8 @@
 							<% } else { %>
 								<span class="label label-default">&#163;<%= game.getPrice() %></span>
 							<% } %>
-      						<strong>Quantity: <%= orderItem.getQuantity() %></strong></p>
+      							<strong>Quantity: <%= orderItem.getQuantity() %></strong>
+      						</p>
 						</div>
 					</li>
   				<% }%>

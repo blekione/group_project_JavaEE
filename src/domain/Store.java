@@ -9,7 +9,8 @@ public class Store {
 
   private static Store uniqueInstance;
   private Database database;
-  List<Game> games;
+  private List<Game> games;
+  private List<Order> orders;
 
   private Store() {
     getDatabase();
@@ -45,11 +46,23 @@ public class Store {
     return database.retrievePlatform(platform);
   }
 
-  public static List<Platform> getPlatformValues() {
-    return Arrays.asList(Platform.values());
-  }
 
   public Game getGame(String productBarcode) {
     return database.retrieveGame(productBarcode);
+  }
+  
+  /** return types of platforms (Xbox One, PS4 etc.), converting enum types into
+   * array list of platform values.
+   * @return ArrayList<Platform>
+   */
+  public static List<Platform> getPlatformValues() {
+    return Arrays.asList(Platform.values());
+  }
+  /** adds new orders to the database
+   * 
+   * @param order
+   */
+  public void addOrder(Order order) {
+	  orders.add(order);
   }
 }
