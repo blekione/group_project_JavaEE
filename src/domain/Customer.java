@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import domain.enumerations.Title;
@@ -15,7 +16,7 @@ public class Customer {
   private Address billingAddress;
   private Address deliveryAddress;
   private String loyaltyAccount;
-  private int telephoneNumber;
+  private String telephoneNumber;
   private String ipAddress;
   private List<Order> orders;
   
@@ -26,7 +27,7 @@ public class Customer {
   
   public Customer (String email, String password, Title title, String firstName,
 	  String secondName, Address billingAddress, Address deliveryAddress,
-	  String loyaltyAccount, int telephoneNumber, String ipAddress) {
+	  String loyaltyAccount, String telephoneNumber, String ipAddress) {
     this.email = email;
     this.password = password;
     this.title = title;
@@ -37,6 +38,7 @@ public class Customer {
     this.loyaltyAccount = loyaltyAccount;
     this.telephoneNumber = telephoneNumber;
     this.ipAddress = ipAddress;
+    this.orders = new ArrayList<>();
   }
   
 //Getters and Setters
@@ -96,11 +98,11 @@ public class Customer {
     this.loyaltyAccount = loyaltyAccount;
   }
 
-  public int getTelephoneNumber() {
+  public String getTelephoneNumber() {
     return telephoneNumber;
   }
 
-  public void setTelephoneNumber(int telephoneNumber) {
+  public void setTelephoneNumber(String telephoneNumber) {
     this.telephoneNumber = telephoneNumber;
   }
 

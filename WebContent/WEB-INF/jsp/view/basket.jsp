@@ -1,4 +1,5 @@
-<%@ page session="true" import="domain.ShoppingCart, domain.OrderItem, domain.Game"%>
+<%@ page session="true" import="domain.Game"%>
+<%--@elvariable id="cartItems" type="domain.OrderItem"--%>
 
 <div class="container">
 	<div class="row">
@@ -8,29 +9,34 @@
       				<h4  class="panel-title">Your basket items:</h4>
   				</div>
   				<ul class="panel-body list-group">
-  				<% for(OrderItem orderItem : cart.getBasket()) { 
-						Game game = orderItem.getItem();
-				%>
+  				<c:forEach items="${cartItems}" var="cartItem">
 					<li class="row list-group-item">
-						<div class="col col-md-2"><img src="<%= game.getPathPictureThumbLocation() %>" alt="<%= game.getName() %>" width=80px/></div>
+						<div class="col col-md-2">
+							<img src="${cartItem.getItem().getPathPictureThumbLocation()}" alt="${cartItem.getItem().getName()}" width=80px/>
+						</div>
 						<div class="col col-md-10">
 							<h5><a href="<c:url value="/store">
 								<c:param name="action" value="product" />
-								<c:param name="barcode" value="<%= game.getBarcodeGS1() %>" />
-								</c:url>"><%= game.getName()%></a>
+								<c:param name="barcode" value="${cartItem.getItem().getBarcodeGS1()}" />
+								</c:url>">${cartItem.getItem().getName()}</a>
 							</h5>
-      						<p>Price: 
-      						<%if (game.getDiscount() > 0) { %>
-      							<span class="label label-default"><s>&#163;<%= game.getPrice() %></s></span>
-								<span class="label label-danger" role="alert">&#163;<%= game.getDiscountedPrice()%></span>
-							<% } else { %>
-								<span class="label label-default">&#163;<%= game.getPrice() %></span>
-							<% } %>
-      							<strong>Quantity: <%= orderItem.getQuantity() %></strong>
+      						<p>Price:
+      							<c:choose>
+      								<c:when test="${cartItem.getItem().getDiscount() > 0}">
+      									<span class="label label-default"><s>&#163;${cartItem.getItem().getPrice()}</s></span>
+										<span class="label label-danger" role="alert">&#163;${cartItem.getItem().getDiscountedPrice()}</span>
+									</c:when>
+									<c:otherwise>
+										<span class="label label-default">&#163;${cartItem.getItem().getPrice()}</span>
+									</c:otherwise>
+      							</c:choose>
+      						</p>
+      						<p>
+      							<strong>Quantity: ${cartItem.getQuantity()}</strong>
       						</p>
 						</div>
 					</li>
-  				<% }%>
+  				</c:forEach>
   				</ul>
   			</div>
  		</div>

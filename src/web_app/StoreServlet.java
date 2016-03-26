@@ -9,10 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import domain.Customer;
 import domain.Game;
 import domain.OrderItem;
 import domain.ShoppingCart;
 import domain.Store;
+import domain.enumerations.Platform;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +27,9 @@ public class StoreServlet extends HttpServlet {
 	private Store store;
 	private List<Game> discountedGames;
 	boolean success = false;
-	HttpSession session;
-
+	private HttpSession session;
+	private boolean loginFail = false;
+	
 	public StoreServlet() {
 		super();
 		store = Store.getInstance();
@@ -33,6 +37,7 @@ public class StoreServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+				
 		request.setAttribute("success", success);
 		session = request.getSession();
 		
@@ -56,6 +61,9 @@ public class StoreServlet extends HttpServlet {
 		case "viewBasket":
 			viewBasket(request, response);
 			return;
+		case "login":
+			login(request, response);
+			return;
 		case "main":
 		default:
 			listDiscountGamesMain(request, response);
@@ -63,6 +71,9 @@ public class StoreServlet extends HttpServlet {
 	}
 
 	private void viewBasket(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+		List<OrderItem> cartItems = cart.getBasket();
+		request.setAttribute("cartItems", cartItems);
 		request.getRequestDispatcher("WEB-INF/jsp/view/basket.jsp")
 		.forward(request, response);
 	}
@@ -94,7 +105,7 @@ public class StoreServlet extends HttpServlet {
 		} else {
 			cart.addNewItem(new OrderItem(quantity, store.getGame(gameBarcode)));
 		}
-		success = true;
+		success = true; // to display message about placing item in basket
 		response.sendRedirect("store?action=category&platform=" + store.getGame(gameBarcode).getPlatform());
 	}
 
@@ -126,19 +137,36 @@ public class StoreServlet extends HttpServlet {
 		request.setAttribute("platform", platform);
 		request.getRequestDispatcher("WEB-INF/jsp/view/platform.jsp")
 		.forward(request, response);
-		success = false;
+		success = false;// to display message about placing item in basket only once
 	}
 
 	private void listDiscountGamesMain(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
 		discountedGames = store.getDiscountedGames();
-
+		List<Platform> platforms = Store.getPlatformValues();
+		request.setAttribute("loginFail", loginFail);
 		request.setAttribute("games", discountedGames);
-
+		this.getServletContext().setAttribute("platforms", platforms);
 		request.getRequestDispatcher("WEB-INF/jsp/view/main.jsp")
 		.forward(request, response);
+		loginFail = false;
 	}
 
+	private void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		String email = request.getParameter("email");
+		String password = request.getParameter("pass");
+		Customer customer = store.checkCustomer(email);
+		if (customer == null) {
+			loginFail = true;
+			session.setAttribute("customer", null);
+		} else {
+			if (store.checkCustomerPassword(customer, password)) {
+				session.setAttribute("customer", customer);
+			}
+		}		
+		response.sendRedirect("store");
+	}
+	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
