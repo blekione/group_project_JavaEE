@@ -9,14 +9,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import domain.Address;
 import domain.Customer;
 import domain.Game;
 import domain.OrderItem;
 import domain.ShoppingCart;
 import domain.Store;
 import domain.enumerations.Platform;
+import domain.enumerations.Title;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @WebServlet("/store")
@@ -66,6 +69,12 @@ public class StoreServlet extends HttpServlet {
 			return;
 		case "logout":
 			logout(request,response);
+			return;
+		case "signin":
+			signin(request,response);
+			return;
+		case "sign-new-customer":
+			signNewCustomer(request, response);
 			return;
 		case "main":
 		default:
@@ -175,6 +184,37 @@ public class StoreServlet extends HttpServlet {
 		session.setAttribute("customer", null);
 		response.sendRedirect("store");
 	}
+
+	private void signin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("in signin");
+		request.setAttribute("titles", Arrays.asList(Title.values()));
+		request.getRequestDispatcher("WEB-INF/jsp/view/sign.jsp")
+		.forward(request, response);
+	}
+
+
+	private void signNewCustomer(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Address address = new Address();
+		address.setHouseNumber(Integer.parseInt(request.getParameter("houseNumber")));
+		address.setStreet(request.getParameter("street"));
+		address.setCity(request.getParameter("city"));
+		address.setCounty(request.getParameter("county"));
+		address.setPostcode(request.getParameter("postcode"));
+		
+		Customer customer = new Customer();
+		customer.setFirstName(request.getParameter("firstName"));
+		customer.setSecondName(request.getParameter("lastName"));
+		customer.setEmail(request.getParameter("email"));
+		customer.setPassword(request.getParameter("password"));
+		customer.setTelephoneNumber(request.getParameter("telephone"));
+		customer.setLoyaltyAccount(request.getParameter("loyaltyAcc"));
+		customer.setAddress(address);
+		
+		store.addCustomer(customer);
+		session.setAttribute("customer", customer);
+		response.sendRedirect("store");
+	}
+
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

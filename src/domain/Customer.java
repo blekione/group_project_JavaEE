@@ -13,11 +13,9 @@ public class Customer {
   private Title title;
   private String firstName;
   private String secondName; 
-  private Address billingAddress;
-  private Address deliveryAddress;
+  private Address address;
   private String loyaltyAccount;
   private String telephoneNumber;
-  private String ipAddress;
   private List<Order> orders;
   
 //Constructors
@@ -26,18 +24,15 @@ public class Customer {
   }
   
   public Customer (String email, String password, Title title, String firstName,
-	  String secondName, Address billingAddress, Address deliveryAddress,
-	  String loyaltyAccount, String telephoneNumber, String ipAddress) {
+	  String secondName, Address address, String loyaltyAccount, String telephoneNumber) {
     this.email = email;
     this.password = password;
     this.title = title;
     this.firstName = firstName;
     this.secondName = secondName;
-    this.billingAddress = billingAddress;
-    this.deliveryAddress = deliveryAddress;
+    this.address = address;
     this.loyaltyAccount = loyaltyAccount;
     this.telephoneNumber = telephoneNumber;
-    this.ipAddress = ipAddress;
     this.orders = new ArrayList<>();
   }
   
@@ -74,20 +69,12 @@ public class Customer {
     this.secondName = secondName;
   }
 
-  public Address getBillingAddress() {
-    return billingAddress;
+  public Address getAddress() {
+    return address;
   }
 
-  public void setBillingAddress(Address billingAddress) {
-    this.billingAddress = billingAddress;
-  }
-
-  public Address getDeliveryAddress() {
-    return deliveryAddress;
-  }
-
-  public void setDeliveryAddress(Address deliveryAddress) {
-    this.deliveryAddress = deliveryAddress;
+  public void setAddress(Address billingAddress) {
+    this.address = billingAddress;
   }
 
   public String getLoyaltyAccount() {
@@ -104,14 +91,6 @@ public class Customer {
 
   public void setTelephoneNumber(String telephoneNumber) {
     this.telephoneNumber = telephoneNumber;
-  }
-
-  public String getIpAddress() {
-    return ipAddress;
-  }
-
-  public void setIpAddress(String ipAddress) {
-    this.ipAddress = ipAddress;
   }
 
   public Title getTitle() {

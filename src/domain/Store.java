@@ -22,7 +22,7 @@ public class Store {
 
   private void test() {
 	  Address testAddress = new Address(22, "Lavender Ave", "Mitcham", "Surrey", "cr4 3rs");
-	  customers.add(new Customer("test@test.com", "test", Title.Mr, "Marcin", "Kruglik", testAddress, testAddress, "ABC123456", "07828141565", "128.0.0.1"));
+	  customers.add(new Customer("test@test.com", "test", Title.Mr, "Marcin", "Kruglik", testAddress, "ABC123456", "07828141565"));
 }
 
 public static Store getInstance() {
@@ -80,6 +80,11 @@ public static Store getInstance() {
    * @param email
    * @return
    */
+  
+  public void addCustomer(Customer customer) {
+	  this.customers.add(customer);
+  }
+  
   public Customer checkCustomer(String email) {
 	  for (Customer customer : customers) {
 		  if (customer.getEmail().equals(email)) {
@@ -96,5 +101,13 @@ public static Store getInstance() {
 		  return false;
 	  }  
   }
+
+public List<Game> getGames() {
+	return games;
+}
+
+public void setGames(List<Game> games) {
+	this.games = games;
+}
   
 }
