@@ -64,6 +64,9 @@ public class StoreServlet extends HttpServlet {
 		case "login":
 			login(request, response);
 			return;
+		case "logout":
+			logout(request,response);
+			return;
 		case "main":
 		default:
 			listDiscountGamesMain(request, response);
@@ -164,6 +167,12 @@ public class StoreServlet extends HttpServlet {
 				session.setAttribute("customer", customer);
 			}
 		}		
+		response.sendRedirect("store");
+	}
+	
+
+	private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		session.setAttribute("customer", null);
 		response.sendRedirect("store");
 	}
 	

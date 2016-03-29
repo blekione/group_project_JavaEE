@@ -21,7 +21,7 @@
 			</div>
 			<div class="ribbon ${game.getPlatform().toString().toLowerCase().substring(0, 2)}"><span>${game.getPlatform()}</span></div>
 		</div>
-		</c:forEach>>
+		</c:forEach>
 	</div>
 </div>
 </div>
