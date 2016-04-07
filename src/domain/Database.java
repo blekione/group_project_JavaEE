@@ -81,4 +81,21 @@ public class Database {
     }
     return null;
   }
+  
+  public boolean persistOrder (Order order) {
+    EntityManagerFactory emf = javax.persistence.Persistence
+            .createEntityManagerFactory("JPU");
+    EntityManager em = emf.createEntityManager();
+    em.getTransaction().begin();
+    try {
+      em.persist(order);
+      em.getTransaction().commit();
+      return true;
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    } finally {
+      em.close();
+    }
+    return false;
+  }
 }

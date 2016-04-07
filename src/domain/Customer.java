@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.enumerations.Title;
+import java.io.Serializable;
 
-public class Customer {
+public class Customer implements Serializable {
   
 //Variables
   private String email;

@@ -3,10 +3,12 @@
   <persistence-unit name="JPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>domain.Game</class>
+    <class>domain.Order</class>
+    <class>domain.OrderItem</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
-    	<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.186.208.97:3306/team_project"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://160.153.16.19:3306/team_project"/>
       <property name="javax.persistence.jdbc.user" value="team_project"/>
       <property name="javax.persistence.jdbc.password" value="passs"/>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
