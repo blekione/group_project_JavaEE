@@ -11,12 +11,12 @@ public class Database {
 //RETRIEVE ALL GAMES  
   public List<Game> retrieveAll() {
     EntityManagerFactory emf = javax.persistence.Persistence
-	    .createEntityManagerFactory("JPU");
+            .createEntityManagerFactory("JPU");
     EntityManager em = emf.createEntityManager();
     em.getTransaction().begin();
     try {
       TypedQuery<Game> query = em.createQuery("SELECT g FROM Game g",
-	      Game.class);
+              Game.class);
       return query.getResultList();
     } catch (Exception ex) {
       ex.printStackTrace();
@@ -29,12 +29,12 @@ public class Database {
 //RETRIEVE ALL GAMES BY PLATFORM (NOTE: PLATFORM STRING IS CASE SENSITIVE)  
   public List<Game> retrievePlatform(String platform) {
     EntityManagerFactory emf = javax.persistence.Persistence
-	    .createEntityManagerFactory("JPU");
+            .createEntityManagerFactory("JPU");
     EntityManager em = emf.createEntityManager();
     em.getTransaction().begin();
     try {
       TypedQuery<Game> query = em.createQuery("SELECT g FROM Game g "
-	      + "WHERE g.platform = :platform", Game.class);
+              + "WHERE g.platform = :platform", Game.class);
       query.setParameter("platform", Platform.valueOf(platform));
       return query.getResultList();
     } catch (Exception ex) {
@@ -48,12 +48,12 @@ public class Database {
 //RETRIEVE ALL DISCOUNTED GAMES  
   public List<Game> retrieveDiscounts() {
     EntityManagerFactory emf = javax.persistence.Persistence
-	    .createEntityManagerFactory("JPU");
+            .createEntityManagerFactory("JPU");
     EntityManager em = emf.createEntityManager();
     em.getTransaction().begin();
     try {
       TypedQuery<Game> query = em.createQuery("SELECT g FROM Game g "
-	      + "WHERE g.discount > 0", Game.class);
+              + "WHERE g.discount > 0", Game.class);
       return query.getResultList();
     } catch (Exception ex) {
       ex.printStackTrace();
@@ -62,16 +62,16 @@ public class Database {
     }
     return null;
   }
-  
+
 //RETRIEVE DETAILS OF A SINGLE GAME  
-  public Game retrieveGame (String barcode) {
+  public Game retrieveGame(String barcode) {
     EntityManagerFactory emf = javax.persistence.Persistence
-	    .createEntityManagerFactory("JPU");
+            .createEntityManagerFactory("JPU");
     EntityManager em = emf.createEntityManager();
     em.getTransaction().begin();
     try {
       TypedQuery<Game> query = em.createQuery("SELECT g FROM Game g "
-	      + "WHERE g.barcodeGS1 = :barcode", Game.class);
+              + "WHERE g.barcodeGS1 = :barcode", Game.class);
       query.setParameter("barcode", barcode);
       return query.getSingleResult();
     } catch (Exception ex) {
@@ -81,8 +81,8 @@ public class Database {
     }
     return null;
   }
-  
-  public boolean persistOrder (Order order) {
+
+  public boolean persistOrder(Order order) {
     EntityManagerFactory emf = javax.persistence.Persistence
             .createEntityManagerFactory("JPU");
     EntityManager em = emf.createEntityManager();
@@ -97,5 +97,22 @@ public class Database {
       em.close();
     }
     return false;
+  }
+
+  public List<OrderItem> returnOrders() {
+    EntityManagerFactory emf = javax.persistence.Persistence
+            .createEntityManagerFactory("JPU");
+    EntityManager em = emf.createEntityManager();
+    em.getTransaction().begin();
+    try {
+      TypedQuery<OrderItem> query = em.createQuery("SELECT o FROM OrderItem o",
+              OrderItem.class);
+      return query.getResultList();
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    } finally {
+      em.close();
+    }
+    return null;
   }
 }
