@@ -1,8 +1,13 @@
 package domain;
 
-public class Address {
+import java.io.Serializable;
+import javax.persistence.Embeddable;
+
+@Embeddable
+public class Address implements Serializable {
+  
 //Variables
-  private int houseNumber;
+  private String houseNumber;
   private String street;
   private String city;
   private String county;
@@ -13,7 +18,7 @@ public class Address {
     
   }
   
-  public Address (int houseNumber, String street, String city,
+  public Address (String houseNumber, String street, String city,
 	  String county, String postcode) {
     this.houseNumber = houseNumber;
     this.street = street;
@@ -23,11 +28,11 @@ public class Address {
   }
   
 //Getters and Setters
-  public int getHouseNumber() {
+  public String getHouseNumber() {
     return houseNumber;
   }
 
-  public void setHouseNumber(int houseNumber) {
+  public void setHouseNumber(String houseNumber) {
     this.houseNumber = houseNumber;
   }
 

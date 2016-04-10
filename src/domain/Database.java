@@ -82,13 +82,13 @@ public class Database {
     return null;
   }
 
-  public boolean persistOrder(Order order) {
+  public boolean persist(Object object) {
     EntityManagerFactory emf = javax.persistence.Persistence
             .createEntityManagerFactory("JPU");
     EntityManager em = emf.createEntityManager();
     em.getTransaction().begin();
     try {
-      em.persist(order);
+      em.persist(object);
       em.getTransaction().commit();
       return true;
     } catch (Exception ex) {
@@ -98,7 +98,7 @@ public class Database {
     }
     return false;
   }
-
+  
   public List<OrderItem> returnOrders() {
     EntityManagerFactory emf = javax.persistence.Persistence
             .createEntityManagerFactory("JPU");
@@ -108,6 +108,27 @@ public class Database {
       TypedQuery<OrderItem> query = em.createQuery("SELECT o FROM OrderItem o",
               OrderItem.class);
       return query.getResultList();
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    } finally {
+      em.close();
+    }
+    return null;
+  }
+  
+  public Customer checkLogin(String email) {
+    EntityManagerFactory emf = javax.persistence.Persistence
+            .createEntityManagerFactory("JPU");
+    EntityManager em = emf.createEntityManager();
+    em.getTransaction().begin();
+    try {
+      TypedQuery<Customer> query = em.createQuery(""
+              + "SELECT c "
+              + "FROM Customer c "
+              + "WHERE c.email = :email",
+              Customer.class);
+      query.setParameter("email", email);
+      return query.getSingleResult();
     } catch (Exception ex) {
       ex.printStackTrace();
     } finally {

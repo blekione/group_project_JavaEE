@@ -5,18 +5,39 @@ import java.util.List;
 
 import domain.enumerations.Title;
 import java.io.Serializable;
+import javax.persistence.Entity;
+import static javax.persistence.EnumType.STRING;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
+
+@Entity
+@Table (name = "CUSTOMERS")
 public class Customer implements Serializable {
   
 //Variables
+  @Id 
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
   private String email;
   private String password;
+  
+  @Enumerated(STRING)
   private Title title;
   private String firstName;
   private String secondName; 
+  
+  @OneToOne
   private Address address;
   private String loyaltyAccount;
   private String telephoneNumber;
+  
+  @Transient
   private List<Order> orders;
   
 //Constructors

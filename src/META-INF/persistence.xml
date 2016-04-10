@@ -5,6 +5,7 @@
     <class>domain.Game</class>
     <class>domain.Order</class>
     <class>domain.OrderItem</class>
+    <class>domain.Customer</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
