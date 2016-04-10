@@ -20,7 +20,7 @@
   		<div class="form-group">
   			<label for="selectTitle" class="col-sm-2 control-label">Title</label>
   			<div class="col-sm-1">
-  				<select class="form-control" id="selectTitle">
+  				<select class="form-control" id="selectTitle" name="title">
   					<c:forEach items="${titles}" var="title">
   						<option>${title}</option>
   					</c:forEach>

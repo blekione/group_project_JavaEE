@@ -164,7 +164,7 @@ public class StoreServlet extends HttpServlet {
     loginFail = false;
   }
 
-  // Correct Login: andrew@rewy.co::test
+  // Correct Login: andrew@rewy.co::test or test@test.com::test
   
   private void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
     String email = request.getParameter("email");
@@ -203,6 +203,7 @@ public class StoreServlet extends HttpServlet {
     address.setPostcode(request.getParameter("postcode"));
 
     Customer customer = new Customer();
+    customer.setTitle(Title.valueOf(request.getParameter("title")));
     customer.setFirstName(request.getParameter("firstName"));
     customer.setSecondName(request.getParameter("lastName"));
     customer.setEmail(request.getParameter("email"));
