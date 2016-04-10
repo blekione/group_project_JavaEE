@@ -18,14 +18,14 @@
 							<p>Price:</p>
 						</c:otherwise>
 					</c:choose>
-					<p>Stock</p>
+					<p>Stock:</p>
 					<p>Description:</p>
 				</div>
 				<div class="col-md-10">
 					<c:choose>
 						<c:when test="${game.getDiscount() > 0}">
 							<p class="text-danger"><s>&#163;${game.getPrice()}</s></p>
-							<p>&#163;${game.getDiscountedPrice()}<span class="text-warning">(-${game.getDiscount()}&#37;)</span></p>
+							<p>&#163;${game.getDiscountedPrice()}<span class="text-warning"> (-${game.getDiscount()}&#37;)</span></p>
 						</c:when>
 						<c:otherwise>
 							<p>&#163;${game.getPrice()}</p>
@@ -34,7 +34,7 @@
 					<p>
 						<c:choose>
 							<c:when test="${game.getStock() <= 5}">
-								<span class="text-danger">only ${game.getStock()} left</span>
+								<span class="text-danger">Only ${game.getStock()} left.</span>
 							</c:when>
 							<c:otherwise>
 								${game.getStock()}
