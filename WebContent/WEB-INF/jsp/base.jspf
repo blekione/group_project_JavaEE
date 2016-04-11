@@ -27,12 +27,12 @@
 </head>
 <body>
 	<div class="container-fluid">
-	
-		<div class="jumbotron logo">
-    		<p>Logo and company name</p>
-  		</div>
+	<div class="jumbotron logo">
+		
+    	<p>Logo and company name</p>
+  	</div>
   	
-		<nav class="navbar navbar-default">
+	<nav class="navbar navbar-default">
 		<ul class="nav navbar-nav">
 			<li><a href="<c:url value="/store" />" >Home</a></li>
 			<c:forEach items="${platforms}" var="platform">
@@ -53,10 +53,10 @@
 						</c:url>" type="button" class="btn btn-default navbar-btn">Logout</a>
     			</c:when>
     			<c:otherwise>
-    				<a href="#" type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#myModal">Log in</a>
+    				<a href="#" type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#myModal">Log In</a>
  					<a href="<c:url value="/store">
 						<c:param name="action" value="signin" />
-						</c:url>" type="button" class="btn btn-default navbar-btn">Sign in</a>
+						</c:url>" type="button" class="btn btn-default navbar-btn">Register</a>
  				</c:otherwise>
  			</c:choose>
 			<c:choose>
@@ -90,7 +90,7 @@
 
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h4 class="modal-title" id="myModalLabel">Log in</h4>
+				<h4 class="modal-title" id="myModalLabel">Log In</h4>
 			</div> <!-- /.modal-header -->
 
 			<div class="modal-body">

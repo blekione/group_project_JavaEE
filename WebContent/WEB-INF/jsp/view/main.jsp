@@ -15,7 +15,7 @@
 						</c:url>">${game.getName()}</a>
 					<p>
 						<span class="label label-default"><s>&#163;${game.getPrice()}</s></span>
-						<span class="label label-danger" role="alert">&#163;${game.getDiscountedPrice()} (- ${game.getDiscount()}&#37;)</span>
+						<span class="label label-danger" role="alert">&#163;${game.getDiscountedPrice()} (-${game.getDiscount()}&#37;)</span>
 					</p>
 				</div>
 			</div>

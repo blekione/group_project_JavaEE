@@ -25,7 +25,7 @@ import java.util.List;
 @WebServlet("/store")
 public class StoreServlet extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
 	private Store store;
 	private List<Game> discountedGames;
@@ -182,21 +182,23 @@ public class StoreServlet extends HttpServlet {
 		loginFail = false;
 	}
 
-	private void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		String email = request.getParameter("email");
-		String password = request.getParameter("pass");
-		Customer customer = store.checkCustomer(email);
-		if (customer == null) {
-			loginFail = true;
-			session.setAttribute("customer", null);
-		} else {
-			if (store.checkCustomerPassword(customer, password)) {
-				session.setAttribute("customer", customer);
-			}
-		}		
-		response.sendRedirect("store");
-	}
-
+  // Correct Login: andrew@rewy.co::test or test@test.com::test
+  
+  private void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    String email = request.getParameter("email");
+    String password = request.getParameter("pass");
+    Customer customer = store.checkCustomer(email);
+    if (customer == null) {
+      loginFail = true;
+      session.setAttribute("customer", null);
+    } else if (store.checkCustomerPassword(customer, password)) {
+      session.setAttribute("customer", customer);
+    } else {
+      loginFail = true;
+      session.setAttribute("customer", null);
+    }
+    response.sendRedirect("store");
+  }
 
 	private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		session.setAttribute("customer", null);
@@ -220,6 +222,7 @@ public class StoreServlet extends HttpServlet {
 		address.setPostcode(request.getParameter("postcode"));
 
 		Customer customer = new Customer();
+		customer.setTitle(Title.valueOf(request.getParameter("title")));
 		customer.setFirstName(request.getParameter("firstName"));
 		customer.setSecondName(request.getParameter("lastName"));
 		customer.setEmail(request.getParameter("email"));
@@ -233,10 +236,10 @@ public class StoreServlet extends HttpServlet {
 		response.sendRedirect("store");
 	}
 
-
+	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-}
+}	
