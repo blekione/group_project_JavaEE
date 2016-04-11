@@ -3,109 +3,114 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+
 import domain.enumerations.Title;
 
 public class Customer {
-  
-//Variables
-  private String email;
-  private String password;
-  private Title title;
-  private String firstName;
-  private String secondName; 
-  private Address address;
-  private String loyaltyAccount;
-  private String telephoneNumber;
-  private List<Order> orders;
-  
-//Constructors
-  public Customer () {
-    
-  }
-  
-  public Customer (String email, String password, Title title, String firstName,
-	  String secondName, Address address, String loyaltyAccount, String telephoneNumber) {
-    this.email = email;
-    this.password = password;
-    this.title = title;
-    this.firstName = firstName;
-    this.secondName = secondName;
-    this.address = address;
-    this.loyaltyAccount = loyaltyAccount;
-    this.telephoneNumber = telephoneNumber;
-    this.orders = new ArrayList<>();
-  }
-  
-//Getters and Setters
-  public String getEmail() {
-    return email;
-  }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+	//Variables
+	// @Id
+	private String email;
+	private String password;
+	private Title title;
+	private String firstName;
+	private String secondName; 
+	private Address address;
+	private String loyaltyAccount;
+	private String telephoneNumber;
+	//@OneToMany((cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="orderOwner;")
+	private List<Order> orders;
 
-  public String getPassword() {
-    return password;
-  }
+	//Constructors
+	public Customer () {
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
+	}
 
-  public String getFirstName() {
-    return firstName;
-  }
+	public Customer (String email, String password, Title title, String firstName,
+			String secondName, Address address, String loyaltyAccount, String telephoneNumber) {
+		this.email = email;
+		this.password = password;
+		this.title = title;
+		this.firstName = firstName;
+		this.secondName = secondName;
+		this.address = address;
+		this.loyaltyAccount = loyaltyAccount;
+		this.telephoneNumber = telephoneNumber;
+		this.orders = new ArrayList<>();
+	}
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
+	//Getters and Setters
+	public String getEmail() {
+		return email;
+	}
 
-  public String getSecondName() {
-    return secondName;
-  }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-  public void setSecondName(String secondName) {
-    this.secondName = secondName;
-  }
+	public String getPassword() {
+		return password;
+	}
 
-  public Address getAddress() {
-    return address;
-  }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-  public void setAddress(Address billingAddress) {
-    this.address = billingAddress;
-  }
+	public String getFirstName() {
+		return firstName;
+	}
 
-  public String getLoyaltyAccount() {
-    return loyaltyAccount;
-  }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-  public void setLoyaltyAccount(String loyaltyAccount) {
-    this.loyaltyAccount = loyaltyAccount;
-  }
+	public String getSecondName() {
+		return secondName;
+	}
 
-  public String getTelephoneNumber() {
-    return telephoneNumber;
-  }
+	public void setSecondName(String secondName) {
+		this.secondName = secondName;
+	}
 
-  public void setTelephoneNumber(String telephoneNumber) {
-    this.telephoneNumber = telephoneNumber;
-  }
+	public Address getAddress() {
+		return address;
+	}
 
-  public Title getTitle() {
-    return title;
-  }
+	public void setAddress(Address billingAddress) {
+		this.address = billingAddress;
+	}
 
-  public void setTitle(Title title) {
-    this.title = title;
-  }
-  
-  public void addOrder(Order order) {
-	  this.orders.add(order);
-  }
-  
-  public List<Order> getOrders() {
-	  return this.orders;
-  }
+	public String getLoyaltyAccount() {
+		return loyaltyAccount;
+	}
+
+	public void setLoyaltyAccount(String loyaltyAccount) {
+		this.loyaltyAccount = loyaltyAccount;
+	}
+
+	public String getTelephoneNumber() {
+		return telephoneNumber;
+	}
+
+	public void setTelephoneNumber(String telephoneNumber) {
+		this.telephoneNumber = telephoneNumber;
+	}
+
+	public Title getTitle() {
+		return title;
+	}
+
+	public void setTitle(Title title) {
+		this.title = title;
+	}
+
+	public void addOrder(Order order) {
+		this.orders.add(order);
+	}
+
+	public List<Order> getOrders() {
+		return this.orders;
+	}
 }

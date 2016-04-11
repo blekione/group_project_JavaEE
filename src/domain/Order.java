@@ -2,11 +2,15 @@ package domain;
 
 import java.util.List;
 
+import javax.persistence.JoinColumn;
+
 public class Order {
 
 	private int orderId;
 	// @OneToMany(cascade=ALL, mappedBy="itemOwner")
 	private List<OrderItem> orderItems;
+	// @ManyToOne
+	// @JoinColumn(name = "EMAIL")
 	private Customer orderOwner;
 
 	public Order() {}

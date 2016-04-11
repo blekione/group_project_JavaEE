@@ -32,7 +32,7 @@ public class StoreServlet extends HttpServlet {
 	boolean success = false;
 	private HttpSession session;
 	private boolean loginFail = false;
-	
+	private boolean checkoutPass = false;
 	public StoreServlet() {
 		super();
 		store = Store.getInstance();
@@ -40,12 +40,12 @@ public class StoreServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				
+
 		request.setAttribute("success", success);
 		session = request.getSession();
-		
+
 		String action = request.getParameter("action");
-		
+
 		if (action == null) {
 			action = "main";
 		}
@@ -76,25 +76,43 @@ public class StoreServlet extends HttpServlet {
 		case "sign-new-customer":
 			signNewCustomer(request, response);
 			return;
+		case "checkout":
+			checkout(request,response);
+			return;
 		case "main":
 		default:
 			listDiscountGamesMain(request, response);
 		}
 	}
 
+	private void checkout(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		System.out.println("customer: " + session.getAttribute("customer"));
+		if (session.getAttribute("customer") == null) {
+			checkoutPass = false;
+		} else {
+			
+			checkoutPass = true;
+		}
+		request.setAttribute("checkoutPass", checkoutPass);
+		request.getRequestDispatcher("WEB-INF/jsp/view/checkout.jsp")
+		.forward(request, response);
+	}
+
 	private void viewBasket(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 		List<OrderItem> cartItems = cart.getBasket();
+		double total = cart.getTotal();
+		request.setAttribute("total", total);
 		request.setAttribute("cartItems", cartItems);
 		request.getRequestDispatcher("WEB-INF/jsp/view/basket.jsp")
 		.forward(request, response);
 	}
 
 	private void addToBasket(HttpServletRequest request, HttpServletResponse response) throws IOException {
-				
+
 		String gameBarcode = "";
 		int quantity = 0;
-		
+
 		try {
 			gameBarcode = request.getParameter("barcode");
 			quantity = Integer.parseInt(request.getParameter("quantity"));
@@ -102,15 +120,15 @@ public class StoreServlet extends HttpServlet {
 			response.sendRedirect("store");
 			return;
 		}		
-		
+
 		if (session.getAttribute("cart") == null) {
 			System.out.println("cart is null");
 			session.setAttribute("cart", new ShoppingCart());
 		}
-		
+
 		ShoppingCart cart = (ShoppingCart)session.getAttribute("cart");
 		System.out.println("cart size: " + cart.getSize());
-		
+
 		if (cart.findItem(gameBarcode) != null) {
 			cart.findItem(gameBarcode).setQuantity(
 					cart.findItem(gameBarcode).getQuantity() + quantity);
@@ -178,7 +196,7 @@ public class StoreServlet extends HttpServlet {
 		}		
 		response.sendRedirect("store");
 	}
-	
+
 
 	private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		session.setAttribute("customer", null);
@@ -200,7 +218,7 @@ public class StoreServlet extends HttpServlet {
 		address.setCity(request.getParameter("city"));
 		address.setCounty(request.getParameter("county"));
 		address.setPostcode(request.getParameter("postcode"));
-		
+
 		Customer customer = new Customer();
 		customer.setFirstName(request.getParameter("firstName"));
 		customer.setSecondName(request.getParameter("lastName"));
@@ -209,13 +227,13 @@ public class StoreServlet extends HttpServlet {
 		customer.setTelephoneNumber(request.getParameter("telephone"));
 		customer.setLoyaltyAccount(request.getParameter("loyaltyAcc"));
 		customer.setAddress(address);
-		
+
 		store.addCustomer(customer);
 		session.setAttribute("customer", customer);
 		response.sendRedirect("store");
 	}
 
-	
+
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub

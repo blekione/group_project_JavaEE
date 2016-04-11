@@ -40,5 +40,15 @@ public class ShoppingCart {
 	public List<OrderItem> getBasket() {
 		return new ArrayList<>(cartItems.values());
 	}
+
+	public Double getTotal() {
+		total = 0.0;
+		for (Map.Entry<String, OrderItem> entry : cartItems.entrySet()) {
+			total += 
+				entry.getValue().getItem().getDiscountedPrice() // game price (with discount if applied)
+				* entry.getValue().getQuantity();				// quantity
+		}
+		return (double) Math.round(total * 100d) / 100;
+	}
 	
 }

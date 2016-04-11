@@ -27,12 +27,12 @@
 </head>
 <body>
 	<div class="container-fluid">
-	<div class="jumbotron logo">
-		
-    	<p>Logo and company name</p>
-  	</div>
+	
+		<div class="jumbotron logo">
+    		<p>Logo and company name</p>
+  		</div>
   	
-	<nav class="navbar navbar-default">
+		<nav class="navbar navbar-default">
 		<ul class="nav navbar-nav">
 			<li><a href="<c:url value="/store" />" >Home</a></li>
 			<c:forEach items="${platforms}" var="platform">
@@ -115,15 +115,7 @@
 
 			</div> <!-- /.modal-body -->
 
-			<div class="modal-footer">
-				<button class="form-control btn btn-primary" type="submit">Login</button>
-
-				<div class="progress">
-					<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="100" style="width: 0%;">
-						<span class="sr-only">progress</span>
-					</div>
-				</div>
-			</div> <!-- /.modal-footer -->
+			<!-- /.modal-footer -->
 
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
