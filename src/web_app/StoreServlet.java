@@ -215,7 +215,7 @@ public class StoreServlet extends HttpServlet {
 
 	private void signNewCustomer(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		Address address = new Address();
-		address.setHouseNumber(Integer.parseInt(request.getParameter("houseNumber")));
+		address.setHouseNumber(request.getParameter("houseNumber"));
 		address.setStreet(request.getParameter("street"));
 		address.setCity(request.getParameter("city"));
 		address.setCounty(request.getParameter("county"));
