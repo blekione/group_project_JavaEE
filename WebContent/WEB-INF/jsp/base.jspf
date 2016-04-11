@@ -1,0 +1,121 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page session="true" import="web_app.StoreServlet, domain.Store, java.util.List, domain.ShoppingCart" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--@elvariable id="platforms" type="domain.Platform"--%>
+<%--@elvariable id="loginFail" type="java.lang.Boolean"--%>
+<%--@elvariable id="customer" type="domain.Customer"--%>
+<%--@elvariable id="cart" type="domain.ShoppingCart"--%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="javascript/main.js"></script>
+    <link href="resources/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="resources/css/main.css">
+   	<script type="text/javascript" src="resources/jquery/jquery-1.12.0.min.js"> </script>
+    <script src="resources/javascript/bootstrap.min.js"> </script>
+    <c:if test="${loginFail == true }">
+   		<script type="text/javascript">
+    		$(window).load(function(){
+       		$('#myModal').modal('show');
+   			});
+		</script>	 
+	</c:if>
+</head>
+<body>
+	<div class="container-fluid">
+	<div class="jumbotron logo">
+		
+    	<p>Logo and company name</p>
+  	</div>
+  	
+	<nav class="navbar navbar-default">
+		<ul class="nav navbar-nav">
+			<li><a href="<c:url value="/store" />" >Home</a></li>
+			<c:forEach items="${platforms}" var="platform">
+				<li>
+					<a href="<c:url value="/store">
+					<c:param name="action" value="category" />
+					<c:param name="platform" value="${platform.toString()}" />
+					</c:url>" >${platform}</a>
+				</li>
+			</c:forEach>
+		</ul>
+ 		<div class="nav navbar-nav navbar-right"> 
+ 			<c:choose>
+ 				<c:when test="${customer != null}">
+    				<a href="#">Hi, ${customer.getFirstName()}</a>
+    				<a href="<c:url value="/store">
+						<c:param name="action" value="logout" />
+						</c:url>" type="button" class="btn btn-default navbar-btn">Logout</a>
+    			</c:when>
+    			<c:otherwise>
+    				<a href="#" type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#myModal">Log In</a>
+ 					<a href="<c:url value="/store">
+						<c:param name="action" value="signin" />
+						</c:url>" type="button" class="btn btn-default navbar-btn">Register</a>
+ 				</c:otherwise>
+ 			</c:choose>
+			<c:choose>
+				<c:when test="${cart != null && cart.getSize() != 0}">
+					<a href="
+						<c:url value="/store">
+							<c:param name="action" value="viewBasket" />
+						</c:url>" type="button" class="btn btn-success navbar-btn">
+						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+						Basket
+						<span class="badge">${cart.getSize()}</span>
+					</a>
+				</c:when>
+				<c:otherwise>
+					<a href="
+						<c:url value="/store">
+							<c:param name="action" value="viewBasket" />
+						</c:url>" type="button" class="btn btn-default navbar-btn  disabled">
+						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+						Basket
+					</a>
+				</c:otherwise>
+			</c:choose>
+ 		 </div> 
+ 	</nav>
+<div
+	class="modal fade"		
+	 id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel">Log In</h4>
+			</div> <!-- /.modal-header -->
+
+			<div class="modal-body">
+				<form role="form" action="store" method="POST">
+					<input type="hidden" name="action" value="login"/>
+					<div class="form-group">
+						<div class="input-group">
+							<input type="text" class="form-control" id="uLogin" placeholder="Email" name="email">
+							<label for="uLogin" class="input-group-addon glyphicon glyphicon-envelope"></label>
+						</div>
+					</div> <!-- /.form-group -->
+
+					<div class="form-group">
+						<div class="input-group">
+							<input type="password" class="form-control" id="uPassword" placeholder="Password" name="pass">
+							<label for="uPassword" class="input-group-addon glyphicon glyphicon-lock"></label>
+						</div> <!-- /.input-group -->
+					</div> <!-- /.form-group -->
+      			<button type="submit" class="btn btn-info" alt="Add to shopping basket">Login <span class="badge"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></span></button>
+      			
+				</form>
+
+			</div> <!-- /.modal-body -->
+
+
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
