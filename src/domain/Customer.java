@@ -123,6 +123,11 @@ public class Customer implements Serializable {
     this.title = title;
   }
   
+  // TODO help method before oderList is implemented into database, delete later
+  public void createOrderList() {
+	  this.orders = new ArrayList<>();
+  }
+  
   public void addOrder(Order order) {
 	  this.orders.add(order);
   }

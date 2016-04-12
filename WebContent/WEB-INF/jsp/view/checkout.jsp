@@ -1,4 +1,6 @@
 <%--@elvariable id="checkoutPass" type="domain.Customer"--%>
+<%--@elvariable id="total" type="java.lang.Double"--%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:choose>
@@ -42,7 +44,22 @@
 		</div>
 	</c:when>
 	<c:otherwise>
-		go and pay 
+		<div class="row">
+			<div class="col col-md-4">
+				<p>Here will be form to put card payment details</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col col-md-6">
+				<div class="alert alert-info">
+					<h4>You will be charged: &#163;<b>${total}</b>.</h4>
+					<p>Please press "Proceed" button to complete your purchase.</p>
+					<p><a class="btn btn-primary" href="<c:url value="/store">
+								<c:param name="action" value="proceed-payment" />
+								</c:url>" role="button">Proceed</a></p>
+				</div>
+			</div>
+		</div>
 	</c:otherwise>
 </c:choose>
 </div>

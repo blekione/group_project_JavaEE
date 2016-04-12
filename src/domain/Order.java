@@ -22,7 +22,13 @@ public class Order implements Serializable {
 
   public Order() {
   }
-
+  
+  public Order(List<OrderItem> orderItems, Customer orderOwner) {
+	  this.orderItems = orderItems;
+	  this.orderOwner = orderOwner;
+  }
+  
+  
   public Order(List<OrderItem> orderItems) {
     this.orderItems = orderItems;
   }

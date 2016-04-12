@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import domain.Address;
 import domain.Customer;
 import domain.Game;
+import domain.Order;
 import domain.OrderItem;
 import domain.ShoppingCart;
 import domain.Store;
@@ -79,10 +80,32 @@ public class StoreServlet extends HttpServlet {
 		case "checkout":
 			checkout(request,response);
 			return;
+		case "proceed-payment":
+			proceedPayment(request, response);
+			return;
 		case "main":
 		default:
 			listDiscountGamesMain(request, response);
 		}
+	}
+
+	private void proceedPayment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO add logic to check for payment acceptance
+		if (true) { // if payment accepted
+			Customer customer = (Customer) session.getAttribute("customer");
+			ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+			List<OrderItem> cartItems = cart.getBasket();
+			Order order = new Order(cartItems, customer);
+			customer.createOrderList(); // TODO delete when orders are implemented into database
+			customer.addOrder(order);
+			request.setAttribute("paymentStatus", true);
+			request.getRequestDispatcher("WEB-INF/jsp/view/main.jsp")
+			.forward(request, response);
+		}
+		else {
+			//TODO redirect to page with information about payment failure
+		}
+		
 	}
 
 	private void checkout(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -90,7 +113,9 @@ public class StoreServlet extends HttpServlet {
 		if (session.getAttribute("customer") == null) {
 			checkoutPass = false;
 		} else {
-			
+			ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+			double total = cart.getTotal();
+			request.setAttribute("total", total);
 			checkoutPass = true;
 		}
 		request.setAttribute("checkoutPass", checkoutPass);
