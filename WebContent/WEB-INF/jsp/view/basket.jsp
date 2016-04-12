@@ -1,5 +1,7 @@
 <%@ page session="true" import="domain.Game"%>
 <%--@elvariable id="cartItems" type="domain.OrderItem"--%>
+<%--@elvariable id="total" type="java.lang.Double"--%>
+
 
 <div class="container">
 	<div class="row">
@@ -40,6 +42,11 @@
   				</ul>
   			</div>
  		</div>
- 		<div class="col-xs-6 col-md-2" id="basket">checkout</div>
+ 		<div class="col-xs-6 col-md-2" id="basket">
+ 		<p><b>Total:</b> &#163;${total}</p>
+ 		<a class="btn btn-primary btn-block" href="<c:url value="/store">
+					<c:param name="action" value="checkout" />
+					</c:url>" role="button">Proceed to checkout</a>
+ 		</div>
  	</div>
 </div>

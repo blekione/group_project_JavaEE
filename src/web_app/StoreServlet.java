@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import domain.Address;
 import domain.Customer;
 import domain.Game;
+import domain.Order;
 import domain.OrderItem;
 import domain.ShoppingCart;
 import domain.Store;
@@ -25,14 +26,14 @@ import java.util.List;
 @WebServlet("/store")
 public class StoreServlet extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
 	private Store store;
 	private List<Game> discountedGames;
 	boolean success = false;
 	private HttpSession session;
 	private boolean loginFail = false;
-	
+	private boolean checkoutPass = false;
 	public StoreServlet() {
 		super();
 		store = Store.getInstance();
@@ -40,12 +41,12 @@ public class StoreServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				
+
 		request.setAttribute("success", success);
 		session = request.getSession();
-		
+
 		String action = request.getParameter("action");
-		
+
 		if (action == null) {
 			action = "main";
 		}
@@ -76,25 +77,67 @@ public class StoreServlet extends HttpServlet {
 		case "sign-new-customer":
 			signNewCustomer(request, response);
 			return;
+		case "checkout":
+			checkout(request,response);
+			return;
+		case "proceed-payment":
+			proceedPayment(request, response);
+			return;
 		case "main":
 		default:
 			listDiscountGamesMain(request, response);
 		}
 	}
 
+	private void proceedPayment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO add logic to check for payment acceptance
+		if (true) { // if payment accepted
+			Customer customer = (Customer) session.getAttribute("customer");
+			ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+			List<OrderItem> cartItems = cart.getBasket();
+			Order order = new Order(cartItems, customer);
+			customer.createOrderList(); // TODO delete when orders are implemented into database
+			customer.addOrder(order);
+			request.setAttribute("paymentStatus", true);
+			request.getRequestDispatcher("WEB-INF/jsp/view/main.jsp")
+			.forward(request, response);
+		}
+		else {
+			//TODO redirect to page with information about payment failure
+		}
+		
+	}
+
+	private void checkout(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		System.out.println("customer: " + session.getAttribute("customer"));
+		if (session.getAttribute("customer") == null) {
+			checkoutPass = false;
+		} else {
+			ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+			double total = cart.getTotal();
+			request.setAttribute("total", total);
+			checkoutPass = true;
+		}
+		request.setAttribute("checkoutPass", checkoutPass);
+		request.getRequestDispatcher("WEB-INF/jsp/view/checkout.jsp")
+		.forward(request, response);
+	}
+
 	private void viewBasket(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 		List<OrderItem> cartItems = cart.getBasket();
+		double total = cart.getTotal();
+		request.setAttribute("total", total);
 		request.setAttribute("cartItems", cartItems);
 		request.getRequestDispatcher("WEB-INF/jsp/view/basket.jsp")
 		.forward(request, response);
 	}
 
 	private void addToBasket(HttpServletRequest request, HttpServletResponse response) throws IOException {
-				
+
 		String gameBarcode = "";
 		int quantity = 0;
-		
+
 		try {
 			gameBarcode = request.getParameter("barcode");
 			quantity = Integer.parseInt(request.getParameter("quantity"));
@@ -102,15 +145,15 @@ public class StoreServlet extends HttpServlet {
 			response.sendRedirect("store");
 			return;
 		}		
-		
+
 		if (session.getAttribute("cart") == null) {
 			System.out.println("cart is null");
 			session.setAttribute("cart", new ShoppingCart());
 		}
-		
+
 		ShoppingCart cart = (ShoppingCart)session.getAttribute("cart");
 		System.out.println("cart size: " + cart.getSize());
-		
+
 		if (cart.findItem(gameBarcode) != null) {
 			cart.findItem(gameBarcode).setQuantity(
 					cart.findItem(gameBarcode).getQuantity() + quantity);
@@ -164,21 +207,23 @@ public class StoreServlet extends HttpServlet {
 		loginFail = false;
 	}
 
-	private void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		String email = request.getParameter("email");
-		String password = request.getParameter("pass");
-		Customer customer = store.checkCustomer(email);
-		if (customer == null) {
-			loginFail = true;
-			session.setAttribute("customer", null);
-		} else {
-			if (store.checkCustomerPassword(customer, password)) {
-				session.setAttribute("customer", customer);
-			}
-		}		
-		response.sendRedirect("store");
-	}
-	
+  // Correct Login: andrew@rewy.co::test or test@test.com::test
+  
+  private void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    String email = request.getParameter("email");
+    String password = request.getParameter("pass");
+    Customer customer = store.checkCustomer(email);
+    if (customer == null) {
+      loginFail = true;
+      session.setAttribute("customer", null);
+    } else if (store.checkCustomerPassword(customer, password)) {
+      session.setAttribute("customer", customer);
+    } else {
+      loginFail = true;
+      session.setAttribute("customer", null);
+    }
+    response.sendRedirect("store");
+  }
 
 	private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		session.setAttribute("customer", null);
@@ -195,13 +240,14 @@ public class StoreServlet extends HttpServlet {
 
 	private void signNewCustomer(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		Address address = new Address();
-		address.setHouseNumber(Integer.parseInt(request.getParameter("houseNumber")));
+		address.setHouseNumber(request.getParameter("houseNumber"));
 		address.setStreet(request.getParameter("street"));
 		address.setCity(request.getParameter("city"));
 		address.setCounty(request.getParameter("county"));
 		address.setPostcode(request.getParameter("postcode"));
-		
+
 		Customer customer = new Customer();
+		customer.setTitle(Title.valueOf(request.getParameter("title")));
 		customer.setFirstName(request.getParameter("firstName"));
 		customer.setSecondName(request.getParameter("lastName"));
 		customer.setEmail(request.getParameter("email"));
@@ -209,7 +255,7 @@ public class StoreServlet extends HttpServlet {
 		customer.setTelephoneNumber(request.getParameter("telephone"));
 		customer.setLoyaltyAccount(request.getParameter("loyaltyAcc"));
 		customer.setAddress(address);
-		
+
 		store.addCustomer(customer);
 		session.setAttribute("customer", customer);
 		response.sendRedirect("store");
@@ -221,4 +267,4 @@ public class StoreServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-}
+}	
