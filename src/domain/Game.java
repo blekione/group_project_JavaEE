@@ -17,6 +17,7 @@ public class Game implements Serializable {
   private String name;
   private String description;
   private int stock;
+ 
 
   @Id
   private String barcodeGS1;
@@ -51,6 +52,8 @@ public class Game implements Serializable {
     this.genre = genre;
     this.platform = platform;
   }
+
+    
 
 //Getters and Setters
   public String getName() {
