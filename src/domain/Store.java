@@ -12,6 +12,9 @@ public class Store {
   private Database database;
   private List<Game> games;
   private List<Order> orders;
+  private List<Observer> observers = new ArrayList<>();
+  
+  
 
   private Store() {
     getDatabase();
@@ -89,5 +92,25 @@ public class Store {
   public void setGames(List<Game> games) {
     this.games = games;
   }
-
+  
+  /* 
+   * methods to works with observers
+   */
+  
+  public void registerObserver (Observer observer) {
+	  this.observers.add(observer);
+  }
+  
+  public void removeObserver (Observer observer) {
+	  int i = this.observers.indexOf(observer);
+	  if (i >= 0) {
+		  observers.remove(i);
+	  }
+  }
+  
+  public void notifyObservers(Order order) {
+	  for (Observer observer : observers) {
+		  observer.update(order);
+	  }
+  }
 }
