@@ -4,11 +4,18 @@ import domain.enumerations.Platform;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 public class Database {
 
-//RETRIEVE ALL GAMES  
+
+  /**
+   * A method to fetch all games currently stored on the database,
+   * regardless of their platform or any other criteria.
+   * @return a list containing all games on the database.
+   * @throws NullPointerException
+   */
   public List<Game> retrieveAll() {
     EntityManagerFactory emf = javax.persistence.Persistence
             .createEntityManagerFactory("JPU");
@@ -98,7 +105,7 @@ public class Database {
     }
     return false;
   }
-  
+
   public List<OrderItem> returnOrders() {
     EntityManagerFactory emf = javax.persistence.Persistence
             .createEntityManagerFactory("JPU");
@@ -115,7 +122,7 @@ public class Database {
     }
     return null;
   }
-  
+
   public Customer checkLogin(String email) {
     EntityManagerFactory emf = javax.persistence.Persistence
             .createEntityManagerFactory("JPU");
@@ -135,5 +142,26 @@ public class Database {
       em.close();
     }
     return null;
+  }
+
+  public boolean addPromotion(String barcode, double discount,
+          double pointMult) {
+    EntityManagerFactory emf = javax.persistence.Persistence
+            .createEntityManagerFactory("JPU");
+    EntityManager em = emf.createEntityManager();
+    Game game = em.find(Game.class, barcode);
+    em.getTransaction().begin();
+    try {
+      game.setDiscount(discount);
+      game.setPointMultiplier(pointMult);
+      em.getTransaction().commit();
+      return true;
+    } catch (Exception ex) {
+      ex.printStackTrace();
+      em.getTransaction().rollback();
+    } finally {
+      em.close();
+    }
+    return false;
   }
 }
