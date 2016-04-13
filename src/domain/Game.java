@@ -18,7 +18,6 @@ public class Game implements Serializable {
   private String description;
   private int stock;
  
-
   @Id
   private String barcodeGS1;
   private double price;
