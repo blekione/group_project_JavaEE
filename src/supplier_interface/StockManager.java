@@ -58,7 +58,8 @@ public class StockManager implements Observer{
         System.out.println("in update method");
         for (OrderItem orderItem : order.getOrderItems()) {
             if (orderItem.getItem().getStock() < 5) {
-                orderGame(orderItem.getItem(), 20);
+            	int newStock = orderItem.getItem().getStock() + 20;
+                orderGame(orderItem.getItem(), newStock);
             }
         }
         
