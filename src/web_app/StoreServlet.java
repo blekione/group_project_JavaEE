@@ -18,6 +18,7 @@ import domain.ShoppingCart;
 import domain.Store;
 import domain.enumerations.Platform;
 import domain.enumerations.Title;
+import supplier_interface.StockManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,6 +38,7 @@ public class StoreServlet extends HttpServlet {
 	public StoreServlet() {
 		super();
 		store = Store.getInstance();
+		store.registerObserver(new StockManager());
 	}
 
 	@Override
@@ -98,6 +100,7 @@ public class StoreServlet extends HttpServlet {
 			Order order = new Order(cartItems, customer);
 			customer.createOrderList(); // TODO delete when orders are implemented into database
 			customer.addOrder(order);
+			store.notifyObservers(order);
 			request.setAttribute("paymentStatus", true);
 			request.getRequestDispatcher("WEB-INF/jsp/view/main.jsp")
 			.forward(request, response);
