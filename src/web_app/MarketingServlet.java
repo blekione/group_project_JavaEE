@@ -1,5 +1,6 @@
 package web_app;
 
+import domain.Customer;
 import domain.Database;
 import domain.Game;
 import domain.Store;
@@ -22,9 +23,7 @@ public class MarketingServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   boolean success = false;
-  private HttpSession session;
-  private boolean loginFail = false;
-  private boolean checkoutPass = false;
+  private HttpSession session;	
   private Database database = null;
 
   public MarketingServlet() {
@@ -45,8 +44,17 @@ public class MarketingServlet extends HttpServlet {
     request.setAttribute("success", success);
     session = request.getSession();
 
-    //To check who is logged in as authentication.
-    //Customer customer = (Customer) session.getAttribute("customer");
+    if (session.getAttribute("customer") != null) {
+      Customer customer = (Customer) session.getAttribute("customer");
+      if (!customer.getEmail().equals("andrew@rewy.co")) {
+	response.sendRedirect("store");
+	return;
+      }
+    } else {
+      response.sendRedirect("store");
+      return;
+    }
+
     String action = request.getParameter("action");
 
     if (action == null) {
@@ -146,7 +154,6 @@ public class MarketingServlet extends HttpServlet {
     } finally {
       response.sendRedirect("marketing");
     }
-
   }
 
   @Override
