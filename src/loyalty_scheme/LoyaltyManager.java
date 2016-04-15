@@ -16,10 +16,9 @@ import domain.Order;
 public class LoyaltyManager implements Observer{
     
     public LoyaltyManager() {
-        LoyaltyScheme testAccount = new LoyaltyScheme();
-        Database db = new Database();
-        db.persist(testAccount);
+        
     }
+   
    public static void main(String[] args) {
        LoyaltyManager test = new LoyaltyManager();
    }
@@ -31,5 +30,11 @@ public class LoyaltyManager implements Observer{
         LoyaltyScheme loyaltyAccount = db.retrieveLoyaltyAccount(order.getOrderOwner().getLoyaltyAccount());
         int points = loyaltyAccount.getLoyaltyPoints() + order.getTotalPoints();
         db.updateLoyaltyPoints(loyaltyAccount.getAccountNumber(), points);       
+    }
+    
+    public int getLoyaltyPoints(String accountNo) {
+        Database db = new Database();
+        LoyaltyScheme loyaltyAccount = db.retrieveLoyaltyAccount(accountNo);
+        return loyaltyAccount.getLoyaltyPoints();
     }
 }
