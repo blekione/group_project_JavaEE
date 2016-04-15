@@ -2,7 +2,11 @@ package web_app;
 
 import domain.Database;
 import domain.Game;
+import domain.Store;
+import domain.enumerations.Genre;
+import domain.enumerations.Platform;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -38,12 +42,13 @@ public class MarketingServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request,
 	  HttpServletResponse response) throws ServletException, IOException {
-
     request.setAttribute("success", success);
     session = request.getSession();
+    
+    //To check who is logged in as authentication.
+    //Customer customer = (Customer) session.getAttribute("customer");
 
     String action = request.getParameter("action");
-    String page = null;
 
     if (action == null) {
       action = "main";
@@ -61,6 +66,9 @@ public class MarketingServlet extends HttpServlet {
       case "addNewPromo":
 	addNewPromo(request, response);
 	return;
+      case "addNewGame":
+	addNewGame(request, response);
+	return;
       default:
 	showOptions(request, response);
     }
@@ -71,11 +79,17 @@ public class MarketingServlet extends HttpServlet {
 	  throws IOException, ServletException {
     request.getRequestDispatcher("WEB-INF/jsp/view/marketing.jsp")
 	    .forward(request, response);
+    success = false;
   }
 
   private void showNewGame(HttpServletRequest request,
 	  HttpServletResponse response)
 	  throws IOException, ServletException {
+    List<Platform> platforms = Store.getPlatformValues();
+    List<Genre> genres = Arrays.asList(Genre.values());
+    request.setAttribute("platforms", platforms);
+    request.setAttribute("genres", genres);
+    
     request.getRequestDispatcher("WEB-INF/jsp/view/newgame.jsp")
 	    .forward(request, response);
   }
@@ -95,23 +109,29 @@ public class MarketingServlet extends HttpServlet {
     request.getRequestDispatcher("WEB-INF/jsp/view/storestats.jsp")
 	    .forward(request, response);
   }
-  
+
   private void addNewPromo(HttpServletRequest request,
 	  HttpServletResponse response)
 	  throws IOException, ServletException {
-    String barcode    = request.getParameter("barcode");
-    double discount   = Double.parseDouble(request.getParameter("discount"));
-    double pointMult  = Double.parseDouble(request.getParameter("pointMult"));
-    
-    if (database.addPromotion(barcode, discount, pointMult)) {
-      System.out.println("Worked");
-    } else {
-      System.out.println("Failed");
-    }
-    
-    response.sendRedirect("marketing?action=newPromo");
-  }
+    String barcode = request.getParameter("barcode");
+    double discount = Double.parseDouble(request.getParameter("discount"));
+    double pointMult = Double.parseDouble(request.getParameter("pointMult"));
 
+    database.addPromotion(barcode, discount, pointMult);
+    success = true;
+    
+    response.sendRedirect("marketing");
+  }
+  
+  private void addNewGame(HttpServletRequest request,
+	  HttpServletResponse response)
+	  throws IOException, ServletException {
+
+    
+    success = true;
+    response.sendRedirect("marketing");
+  }
+  
   @Override
   protected void doPost(HttpServletRequest request,
 	  HttpServletResponse response) throws ServletException, IOException {
