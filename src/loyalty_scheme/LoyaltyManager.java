@@ -16,10 +16,9 @@ import domain.Order;
 public class LoyaltyManager implements Observer{
     
     public LoyaltyManager() {
-        LoyaltyScheme testAccount = new LoyaltyScheme();
-        Database db = new Database();
-        db.persist(testAccount);
+        
     }
+   
    public static void main(String[] args) {
        LoyaltyManager test = new LoyaltyManager();
    }

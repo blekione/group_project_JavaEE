@@ -4,6 +4,7 @@ import domain.enumerations.Platform;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import loyalty_scheme.LoyaltyScheme;
@@ -198,4 +199,21 @@ public class Database {
     }
     return false;
   }
+  
+  public void updateGameStock(Game item, int newStock) {
+      Game orderedGame = null;
+      EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("JPU");
+      EntityManager entityManager = entityManagerFactory.createEntityManager();
+      try {
+          orderedGame = entityManager.find(Game.class, item.getBarcodeGS1());
+          entityManager.getTransaction().begin();
+          orderedGame.setStock(newStock);
+          entityManager.getTransaction().commit();
+      } catch (Exception e) {
+          e.printStackTrace();
+      } finally {
+          entityManager.close();
+      }        
+  }
+  
 }

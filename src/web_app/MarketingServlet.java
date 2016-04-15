@@ -25,8 +25,9 @@ public class MarketingServlet extends HttpServlet {
 
   public MarketingServlet() {
     super();
+    getDatabase();
   }
-  
+
   private Database getDatabase() {
     if (database == null) {
       database = new Database();
@@ -36,7 +37,7 @@ public class MarketingServlet extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest request,
-          HttpServletResponse response) throws ServletException, IOException {
+	  HttpServletResponse response) throws ServletException, IOException {
 
     request.setAttribute("success", success);
     session = request.getSession();
@@ -49,52 +50,71 @@ public class MarketingServlet extends HttpServlet {
     }
     switch (action) {
       case "newGame":
-        showNewGame(request, response);
-        return;
+	showNewGame(request, response);
+	return;
       case "newPromo":
-        showNewPromo(request, response);
-        return;
+	showNewPromo(request, response);
+	return;
       case "stats":
-        showStoreStats(request, response);
-        return;
+	showStoreStats(request, response);
+	return;
+      case "addNewPromo":
+	addNewPromo(request, response);
+	return;
       default:
-        showOptions(request, response);
+	showOptions(request, response);
     }
   }
 
   private void showOptions(HttpServletRequest request,
-          HttpServletResponse response)
-          throws IOException, ServletException {
+	  HttpServletResponse response)
+	  throws IOException, ServletException {
     request.getRequestDispatcher("WEB-INF/jsp/view/marketing.jsp")
-            .forward(request, response);
+	    .forward(request, response);
   }
-  
+
   private void showNewGame(HttpServletRequest request,
-          HttpServletResponse response)
-          throws IOException, ServletException {
+	  HttpServletResponse response)
+	  throws IOException, ServletException {
     request.getRequestDispatcher("WEB-INF/jsp/view/newgame.jsp")
-            .forward(request, response);
+	    .forward(request, response);
   }
-  
+
   private void showNewPromo(HttpServletRequest request,
-          HttpServletResponse response)
-          throws IOException, ServletException {
+	  HttpServletResponse response)
+	  throws IOException, ServletException {
     List<Game> games = database.retrieveAll();
     request.setAttribute("games", games);
     request.getRequestDispatcher("WEB-INF/jsp/view/newpromo.jsp")
-            .forward(request, response);
+	    .forward(request, response);
+  }
+
+  private void showStoreStats(HttpServletRequest request,
+	  HttpServletResponse response)
+	  throws IOException, ServletException {
+    request.getRequestDispatcher("WEB-INF/jsp/view/storestats.jsp")
+	    .forward(request, response);
   }
   
-  private void showStoreStats(HttpServletRequest request,
-          HttpServletResponse response)
-          throws IOException, ServletException {
-    request.getRequestDispatcher("WEB-INF/jsp/view/storestats.jsp")
-            .forward(request, response);
+  private void addNewPromo(HttpServletRequest request,
+	  HttpServletResponse response)
+	  throws IOException, ServletException {
+    String barcode    = request.getParameter("barcode");
+    double discount   = Double.parseDouble(request.getParameter("discount"));
+    double pointMult  = Double.parseDouble(request.getParameter("pointMult"));
+    
+    if (database.addPromotion(barcode, discount, pointMult)) {
+      System.out.println("Worked");
+    } else {
+      System.out.println("Failed");
+    }
+    
+    response.sendRedirect("marketing?action=newPromo");
   }
 
   @Override
   protected void doPost(HttpServletRequest request,
-          HttpServletResponse response) throws ServletException, IOException {
+	  HttpServletResponse response) throws ServletException, IOException {
     // TODO Auto-generated method stub
     doGet(request, response);
   }

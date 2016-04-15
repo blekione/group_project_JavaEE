@@ -22,8 +22,7 @@ public class LoyaltyScheme {
     int loyaltyPoints;
     
     public LoyaltyScheme() {
-        this.accountNumber = "ax12345";
-        this.loyaltyPoints = 0;
+        
     }
 
     public int getLoyaltyPoints() {

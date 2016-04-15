@@ -18,6 +18,7 @@ import domain.ShoppingCart;
 import domain.Store;
 import domain.enumerations.Platform;
 import domain.enumerations.Title;
+import loyalty_scheme.LoyaltyManager;
 import supplier_interface.StockManager;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class StoreServlet extends HttpServlet {
 		super();
 		store = Store.getInstance();
 		store.registerObserver(new StockManager());
+		store.registerObserver(new LoyaltyManager());
 	}
 
 	@Override
@@ -100,7 +102,9 @@ public class StoreServlet extends HttpServlet {
 			Order order = new Order(cartItems, customer);
 			customer.createOrderList(); // TODO delete when orders are implemented into database
 			customer.addOrder(order);
+			store.procedOrder(order);
 			store.notifyObservers(order);
+			session.setAttribute("cart", null);
 			request.setAttribute("paymentStatus", true);
 			request.getRequestDispatcher("WEB-INF/jsp/view/main.jsp")
 			.forward(request, response);
@@ -112,7 +116,6 @@ public class StoreServlet extends HttpServlet {
 	}
 
 	private void checkout(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		System.out.println("customer: " + session.getAttribute("customer"));
 		if (session.getAttribute("customer") == null) {
 			checkoutPass = false;
 		} else {
@@ -150,12 +153,10 @@ public class StoreServlet extends HttpServlet {
 		}		
 
 		if (session.getAttribute("cart") == null) {
-			System.out.println("cart is null");
 			session.setAttribute("cart", new ShoppingCart());
 		}
 
 		ShoppingCart cart = (ShoppingCart)session.getAttribute("cart");
-		System.out.println("cart size: " + cart.getSize());
 
 		if (cart.findItem(gameBarcode) != null) {
 			cart.findItem(gameBarcode).setQuantity(
@@ -234,7 +235,6 @@ public class StoreServlet extends HttpServlet {
 	}
 
 	private void signin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("in signin");
 		request.setAttribute("titles", Arrays.asList(Title.values()));
 		request.getRequestDispatcher("WEB-INF/jsp/view/sign.jsp")
 		.forward(request, response);
