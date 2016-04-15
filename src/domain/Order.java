@@ -54,4 +54,7 @@ public class Order implements Serializable {
     return this.orderItems;
   }
 
+  public Customer getOrderOwner() {
+        return orderOwner;
+    }
 }

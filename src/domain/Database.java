@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import loyalty_scheme.LoyaltyScheme;
 
 public class Database {
 
@@ -87,6 +88,39 @@ public class Database {
       em.close();
     }
     return null;
+  }
+  
+  public LoyaltyScheme retrieveLoyaltyAccount(String accountNo) {
+    EntityManagerFactory emf = javax.persistence.Persistence
+            .createEntityManagerFactory("JPU");
+    EntityManager em = emf.createEntityManager();
+    em.getTransaction().begin();
+    LoyaltyScheme loyaltyAccount = null;
+    try {
+     loyaltyAccount = em.find(LoyaltyScheme.class, accountNo);
+      } catch (Exception ex) {
+      ex.printStackTrace();
+    } finally {
+      em.close();
+    }
+    return loyaltyAccount;
+  }
+  
+  public void updateLoyaltyPoints(String accountNo, int points) {
+    LoyaltyScheme loyaltyAccount = null;
+    EntityManagerFactory emf = javax.persistence.Persistence
+        .createEntityManagerFactory("JPU");
+    EntityManager em = emf.createEntityManager();
+    try {
+     loyaltyAccount = em.find(LoyaltyScheme.class, accountNo);
+     em.getTransaction().begin();
+     loyaltyAccount.setLoyaltyPoints(points);
+     em.getTransaction().commit();
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    } finally {
+      em.close();
+    }  
   }
 
   public boolean persist(Object object) {
