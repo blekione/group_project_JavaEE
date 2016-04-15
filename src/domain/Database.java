@@ -233,4 +233,26 @@ public class Database {
     return game;
   }
   
+  public void updateGame (Game game) {
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPU");
+    EntityManager em = emf.createEntityManager();
+    try {
+      em.getTransaction().begin();
+      Game gameOld = em.find(Game.class, game.getBarcodeGS1());
+      gameOld.setName(game.getName());
+      gameOld.setDescription(game.getDescription());
+      gameOld.setGenre(game.getGenre());
+      gameOld.setPlatform(game.getPlatform());
+      gameOld.setPrice(game.getPrice());
+      gameOld.setDiscount(game.getDiscount());
+      gameOld.setPointMultiplier(game.getPointMultiplier());
+      em.getTransaction().commit();
+    } catch (Exception ex) {
+      ex.printStackTrace();
+      em.getTransaction().rollback();
+    } finally {
+      em.close();
+    }
+  }
+  
 }
