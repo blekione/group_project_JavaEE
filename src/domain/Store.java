@@ -113,4 +113,18 @@ public class Store {
 		  observer.update(order);
 	  }
   }
+
+  public void procedOrder(Order order) {
+	// TODO Auto-generated method stub
+	updateStock(order);
+}
+
+  private void updateStock(Order order) {
+	for (OrderItem orderItem : order.getOrderItems()) {
+		Game game = orderItem.getItem();
+		int newStock = game.getStock() - orderItem.getQuantity();
+		database.updateGameStock(game, newStock);
+	}
+	
+  }
 }

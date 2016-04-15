@@ -41,6 +41,7 @@ public class Order implements Serializable {
 
     int points = 0;
     for (OrderItem item : orderItems) {
+    	System.out.println("points from game: " + item.getLoyaltyPoints());
       points += item.getLoyaltyPoints();
     }
     return points;
