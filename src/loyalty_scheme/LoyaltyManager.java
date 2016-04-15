@@ -32,4 +32,10 @@ public class LoyaltyManager implements Observer{
         int points = loyaltyAccount.getLoyaltyPoints() + order.getTotalPoints();
         db.updateLoyaltyPoints(loyaltyAccount.getAccountNumber(), points);       
     }
+    
+    public int getLoyaltyPoints(String accountNo) {
+        Database db = new Database();
+        LoyaltyScheme loyaltyAccount = db.retrieveLoyaltyAccount(accountNo);
+        return loyaltyAccount.getLoyaltyPoints();
+    }
 }
