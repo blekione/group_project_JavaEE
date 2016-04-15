@@ -36,6 +36,7 @@ public class GUI extends Application {
         ObservableList<Game> data = FXCollections.observableArrayList();
         TableView<Game> table = new TableView<>();
         HBox hBox = new HBox();
+   
         GridPane root = new GridPane();
         
         stockManager.getGames(data, table);
@@ -56,8 +57,9 @@ public class GUI extends Application {
         //Append columns to table
         table.getColumns().addAll(column1, column2);
 
-        btn = new Button("Supply Stock");
-
+        btn = new Button("Refresh");
+        btn.setOnAction(e -> stockManager.getGame(data, table));
+        
         hBox.getChildren().add(table);
 
         GridPane.setConstraints(hBox, 0, 0);
@@ -66,8 +68,8 @@ public class GUI extends Application {
         root.setPadding(new Insets(10, 10, 10, 10));
         Scene scene = new Scene(root, 600, 300);
         scene.getStylesheets().add(GUI.class.getResource("supplier-interface-main.css").toExternalForm());
-
-        primaryStage.setTitle("Supplier Interface");
+        primaryStage.setResizable(false);
+        primaryStage.setTitle("Supply Stock");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

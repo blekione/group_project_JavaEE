@@ -17,54 +17,69 @@ import javax.persistence.Query;
  *
  * @author Bartosz Mirowski
  */
-public class StockManager implements Observer{
-    
+public class StockManager implements Observer {
+
     public List<Game> getGames(ObservableList<Game> data, TableView table) {
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("JPU");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
         try {
-            
+
             List<Game> listGames = entityManager.createQuery("SELECT p FROM Game p").getResultList();
             for (Game game : listGames) {
                 data.add(game);
                 table.setItems(data);
-               
-                if(game.getStock() <=22){
-                    
-                   
-                    
-                   game.setStock(10);
-                   
-                }
-                
 
             }
-           
-           
+
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
+
+            entityManager.close();
+            entityManagerFactory.close();
+        }
+        return null;
+    }
+    
+    public List<Game> getGame(ObservableList<Game> data, TableView table) {
+        data.removeAll(data);
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("JPU");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        try {
+
+            List<Game> listGames = entityManager.createQuery("SELECT p FROM Game p").getResultList();
             
+            for (Game game : listGames) {
+                 data.add(game);
+                table.setItems(data);
+
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+
             entityManager.close();
             entityManagerFactory.close();
         }
         return null;
     }
 
+    
     @Override
     public void update(Order order) {
         for (OrderItem orderItem : order.getOrderItems()) {
             if (orderItem.getItem().getStock() < 5) {
-            	int newStock = orderItem.getItem().getStock() + 20;
+                int newStock = orderItem.getItem().getStock() + 20;
                 orderGame(orderItem.getItem(), newStock);
             }
         }
-        
+
     }
-    
-        
+
     private void orderGame(Game item, int newStock) {
         Game orderedGame = null;
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("JPU");
@@ -78,9 +93,7 @@ public class StockManager implements Observer{
             e.printStackTrace();
         } finally {
             entityManager.close();
-        }        
+        }
     }
-    
-}
 
-    
+}
