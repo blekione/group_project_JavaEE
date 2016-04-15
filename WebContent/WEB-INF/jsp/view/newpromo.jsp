@@ -16,10 +16,10 @@
 	</select>
 
 	<br />
-	New Discount: <input type="number" name="discount" id="discount" />
+	New Discount: <input type="number" name="discount" id="discount" required />
 
 	<br />
-	New Points Multiplier: <input type="number" name="pointMult" id="discount" />
+	New Points Multiplier: <input type="number" name="pointMult" id="discount" required />
 
 	<br />
 	<input type="submit" name="submit" value="submit" />

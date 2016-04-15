@@ -44,10 +44,9 @@ public class MarketingServlet extends HttpServlet {
 	  HttpServletResponse response) throws ServletException, IOException {
     request.setAttribute("success", success);
     session = request.getSession();
-    
+
     //To check who is logged in as authentication.
     //Customer customer = (Customer) session.getAttribute("customer");
-
     String action = request.getParameter("action");
 
     if (action == null) {
@@ -89,7 +88,7 @@ public class MarketingServlet extends HttpServlet {
     List<Genre> genres = Arrays.asList(Genre.values());
     request.setAttribute("platforms", platforms);
     request.setAttribute("genres", genres);
-    
+
     request.getRequestDispatcher("WEB-INF/jsp/view/newgame.jsp")
 	    .forward(request, response);
   }
@@ -119,19 +118,37 @@ public class MarketingServlet extends HttpServlet {
 
     database.addPromotion(barcode, discount, pointMult);
     success = true;
-    
+
     response.sendRedirect("marketing");
   }
-  
+
   private void addNewGame(HttpServletRequest request,
 	  HttpServletResponse response)
 	  throws IOException, ServletException {
+    try {
+      String barcode = request.getParameter("gameBarcode");
+      String name = request.getParameter("gameName");
+      String description = request.getParameter("gameDesc");
+      Genre genre = Genre.valueOf(request.getParameter("gameGenre"));
+      Platform platform = Platform.valueOf(request.getParameter("gamePlatform"));
+      double price = Double.parseDouble(request.getParameter("gamePrice"));
+      double discount = Double.parseDouble(request.getParameter("gameDiscount"));
+      int stock = Integer.parseInt(request.getParameter("gameStock"));
+      double pointMult = Double.parseDouble(request.getParameter("gamePointMult"));
+      String image = "resources/images/default.jpg";
 
-    
-    success = true;
-    response.sendRedirect("marketing");
+      Game newGame = new Game(name, description, stock, barcode, price, pointMult,
+	      image, image, discount, genre, platform);
+      database.persist(newGame);
+      success = true;
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    } finally {
+      response.sendRedirect("marketing");
+    }
+
   }
-  
+
   @Override
   protected void doPost(HttpServletRequest request,
 	  HttpServletResponse response) throws ServletException, IOException {

@@ -211,9 +211,26 @@ public class Database {
           entityManager.getTransaction().commit();
       } catch (Exception e) {
           e.printStackTrace();
+	  entityManager.getTransaction().rollback();
       } finally {
           entityManager.close();
       }        
+  }
+  
+  public Game findGame (String gameBarcode) {
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPU");
+    EntityManager em = emf.createEntityManager();
+    Game game = null;
+    try {
+      em.getTransaction().begin();
+      game = em.find(Game.class, gameBarcode);
+    } catch (Exception ex) {
+      ex.printStackTrace();
+      em.getTransaction().rollback();
+    } finally {
+      em.close();
+    }
+    return game;
   }
   
 }

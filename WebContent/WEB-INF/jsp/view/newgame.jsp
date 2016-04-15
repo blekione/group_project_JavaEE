@@ -7,20 +7,20 @@
   <div class="panel-body">
     <form class="form-horizontal panel-body" role="form" action="marketing" method="POST">
       <input type="hidden" name="action" value="addNewGame"/>
-      Game Barcode: <input type="text" name="gameBarcode" id="gameBarcode" /> <br />
-      Game Name: <input type="text" name="gameName" id="gameName" /> <br />
-      Game Description: <input type="text" name="gameDesc" id="gameDesc" /> <br />
+      Game Barcode: <input type="text" name="gameBarcode" id="gameBarcode" required /> <br />
+      Game Name: <input type="text" name="gameName" id="gameName" required /> <br />
+      Game Description: <input type="text" name="gameDesc" id="gameDesc" required /> <br />
       Game Genre:
-      <select>
+      <select id="gameGenre" name="gameGenre">
 	<c:forEach items="${genres}" var="genre">
-	  <option value="${genres}">
+	  <option value="${genre}">
 	    ${genre}
 	  </option>
 	</c:forEach>
       </select> <br />
 
       Game Platform:
-      <select>
+      <select id="gamePlatform" name="gamePlatform">
 	<c:forEach items="${platforms}" var="platform">
 	  <option value="${platform}">
 	    ${platform}
@@ -28,10 +28,10 @@
 	</c:forEach>
       </select> <br />
 
-      Game Price: <input type="number" name="gamePrice" id="gamePrice" min="0" max="1000" /> <br />
-      Game Discount: <input type="number" name="gameDiscount" id="gameDiscount" min="0" max="100" /> <br />
-      Game Stock: <input type="number" name="gameStock" id="gameStock" min="0" /> <br />
-      Game Point Multiplier: <input type="number" name="gamePointMult" id="gamePointMult" min="1" /> <br />
+      Game Price: <input type="number" name="gamePrice" id="gamePrice" min="0" max="1000" required /> <br />
+      Game Discount: <input type="number" name="gameDiscount" id="gameDiscount" min="0" max="100" required /> <br />
+      Game Stock: <input type="number" name="gameStock" id="gameStock" min="0" required /> <br />
+      Game Point Multiplier: <input type="number" name="gamePointMult" id="gamePointMult" min="1" required /> <br />
       <input type="submit" name="submit" value="submit" />
     </form>
   </div>

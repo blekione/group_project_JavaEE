@@ -46,7 +46,7 @@
 			<ul class="list-group">
 				<c:forEach items="${platformGames}" var="game">
     				<li class="row list-group-item">
-      					<div class="col col-md-2"><img src="${game.getPathPictureThumbLocation()}" alt="${game.getName()}" ng-href="#"/></div>
+      					<div class="col col-md-2"><img src="${game.getPathPictureThumbLocation()}" alt="${game.getName()}" width="160" ng-href="#"/></div>
       					<div class="col col-md-10">
       						<h4><a href="<c:url value="/store">
 								<c:param name="action" value="product" />
