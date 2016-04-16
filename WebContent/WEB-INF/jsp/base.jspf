@@ -80,7 +80,7 @@
 						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
 						Basket
 					</a>
-                                        <c:if test="${customer.getEmail().equals('andrew@rewy.co')}">
+                                        <c:if test="${customer != null and customer.getEmail().equals('andrew@rewy.co')}">
                                           <a href="marketing">
                                             <button type="button" class="btn btn-primary">Marketing</button>
                                           </a>
