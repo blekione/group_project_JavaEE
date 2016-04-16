@@ -82,7 +82,7 @@
 					</a>
                                         <c:if test="${customer.getEmail().equals('andrew@rewy.co')}">
                                           <a href="marketing">
-                                            <button type="button" class="btn btn-danger">Marketing</button>
+                                            <button type="button" class="btn btn-primary">Marketing</button>
                                           </a>
                                         </c:if>
 				</c:otherwise>
