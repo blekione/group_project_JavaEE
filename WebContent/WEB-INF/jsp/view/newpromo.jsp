@@ -3,6 +3,23 @@
 
 <title>GG Marketing - Add a New Promotion</title>
 <body>
+  
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="marketing">Marketing Home</a></li>
+            <li><a href="?action=newGame">Add New Game</a></li>
+            <li><a href="?action=listGames">Edit Existing Game</a></li>
+            <li class="active"><a href="#">Start New Promotion</a></li>
+            <li><a href="?action=emailCustomer">Email Customer</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
   <div class="container-fluid panel panel-default">
     <div class="panel-heading row"><h3 class="panel-title">Enter New Promotion Details</h3></div>	
     <div class="panel-body">
