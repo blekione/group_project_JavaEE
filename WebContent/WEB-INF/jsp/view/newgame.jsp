@@ -34,7 +34,8 @@
           <label for="gameDesc" class="col-sm-1 control-label">Description</label>
           <div class="col-sm-6">
             <textarea name="gameDesc" id="gameDesc" class="form-control"
-                      placeholder="GameXYZ Description" required></textarea>
+                      placeholder="GameXYZ Description" 
+                      rows="5" required></textarea>
           </div>
         </div>
 
@@ -124,9 +125,10 @@
 
         <div class="form-group">
           <div class="col-sm-offset-1 col-sm-6">
-            <input type="submit" name="submit" value="Add a New Game" class="btn btn-primary" />
+            <input type="submit" name="submit" value="Add New Game" class="btn btn-primary" />
           </div>
         </div>
+        
       </form>
     </div>
   </div>

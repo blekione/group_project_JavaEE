@@ -8,6 +8,7 @@
     <div class="panel-body">
       <form class="form-horizontal panel-body" role="form" action="marketing" method="POST">
         <input type="hidden" name="action" value="addNewPromo"/>
+
         <div class="form-group">
           <label for="selectGame" class="col-sm-1 control-label">Game</label>
           <div class="col-sm-6">

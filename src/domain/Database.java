@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import loyalty_scheme.LoyaltyScheme;
 
@@ -253,6 +252,24 @@ public class Database {
     } finally {
       em.close();
     }
+  }
+  
+  public List<Customer> retrieveCustomers() {
+    EntityManagerFactory emf = javax.persistence.Persistence
+            .createEntityManagerFactory("JPU");
+    EntityManager em = emf.createEntityManager();
+    List<Customer> customers = null;
+    try {
+      em.getTransaction().begin();
+      TypedQuery<Customer> query = em.createQuery("SELECT c FROM Customer c",
+              Customer.class);
+      customers = query.getResultList();
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    } finally {
+      em.close();
+    }
+    return customers;
   }
 
 }

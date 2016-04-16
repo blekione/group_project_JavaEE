@@ -120,8 +120,7 @@
                 Promotion & Stock Information
                 <small>
                   This information can only be updated in their respective
-                  sections.
-                </small>
+                  sections.</small>
               </h3>
             </div>
 

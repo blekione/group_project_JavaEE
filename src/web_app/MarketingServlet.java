@@ -76,6 +76,12 @@ public class MarketingServlet extends HttpServlet {
       case "updateGame":
         updateGame(request, response);
         return;
+      case "emailCustomer":
+        showEmailCustomer(request, response);
+        return;
+      case "sendEmail":
+        sendEmail(request, response);
+        return;
       case "addNewPromo":
         addNewPromo(request, response);
         return;
@@ -139,6 +145,22 @@ public class MarketingServlet extends HttpServlet {
     request.setAttribute("edit", true);
     request.getRequestDispatcher("WEB-INF/jsp/view/editgame.jsp")
             .forward(request, response);
+  }
+  
+  private void showEmailCustomer(HttpServletRequest request,
+          HttpServletResponse response)
+          throws IOException, ServletException {
+    List<Customer> customers = database.retrieveCustomers();
+    request.setAttribute("customers", customers);
+    request.getRequestDispatcher("WEB-INF/jsp/view/emailcust.jsp")
+            .forward(request, response);
+  }
+  
+  private void sendEmail(HttpServletRequest request,
+          HttpServletResponse response)
+          throws IOException, ServletException {
+    success = true;
+    response.sendRedirect("marketing");
   }
 
   private void addNewPromo(HttpServletRequest request,

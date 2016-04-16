@@ -111,7 +111,7 @@
 							<label for="uPassword" class="input-group-addon glyphicon glyphicon-lock"></label>
 						</div> <!-- /.input-group -->
 					</div> <!-- /.form-group -->
-      			<button type="submit" class="btn btn-info" alt="Add to shopping basket">Login <span class="badge"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></span></button>
+      			<button type="submit" class="btn btn-info" alt="Add to shopping basket">Login <span class="badge"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span></button>
       			
 				</form>
 

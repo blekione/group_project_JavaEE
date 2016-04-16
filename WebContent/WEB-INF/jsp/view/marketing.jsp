@@ -61,7 +61,7 @@
         </div>
 
         <div class="col-sm-8 col-md-2">
-          <a href="?action=newGame">
+          <a href="?action=emailCustomer">
             <div class="thumbnail">
               <img src="resources/images/marketing/email.png" alt="Email User Image">
               <div class="btn-group btn-group-justified" role="group">
