@@ -62,7 +62,7 @@
     		<input type="hidden" name="barcode" value="${game.getBarcodeGS1()}"/>
     		<div class="form-group">
     			<div class="col-sm-offset-2 col-sm-10">
-      			<button type="submit" class="btn btn-info" alt="Add to shopping basket">Add to basket <span class="badge"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></span></button>
+      			<button type="submit" class="btn btn-info" alt="Add to shopping basket">Add Item to Basket <span class="badge"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></span></button>
     		</div>
     	</form>
 	</div>

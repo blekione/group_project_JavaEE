@@ -11,10 +11,10 @@ import loyalty_scheme.LoyaltyScheme;
 
 public class Database {
 
-
   /**
-   * A method to fetch all games currently stored on the database,
-   * regardless of their platform or any other criteria.
+   * A method to fetch all games currently stored on the database, regardless of
+   * their platform or any other criteria.
+   *
    * @return a list containing all games on the database.
    * @throws NullPointerException
    */
@@ -90,7 +90,7 @@ public class Database {
     }
     return null;
   }
-  
+
   public LoyaltyScheme retrieveLoyaltyAccount(String accountNo) {
     EntityManagerFactory emf = javax.persistence.Persistence
             .createEntityManagerFactory("JPU");
@@ -98,30 +98,30 @@ public class Database {
     em.getTransaction().begin();
     LoyaltyScheme loyaltyAccount = null;
     try {
-     loyaltyAccount = em.find(LoyaltyScheme.class, accountNo);
-      } catch (Exception ex) {
+      loyaltyAccount = em.find(LoyaltyScheme.class, accountNo);
+    } catch (Exception ex) {
       ex.printStackTrace();
     } finally {
       em.close();
     }
     return loyaltyAccount;
   }
-  
+
   public void updateLoyaltyPoints(String accountNo, int points) {
     LoyaltyScheme loyaltyAccount = null;
     EntityManagerFactory emf = javax.persistence.Persistence
-        .createEntityManagerFactory("JPU");
+            .createEntityManagerFactory("JPU");
     EntityManager em = emf.createEntityManager();
     try {
-     loyaltyAccount = em.find(LoyaltyScheme.class, accountNo);
-     em.getTransaction().begin();
-     loyaltyAccount.setLoyaltyPoints(points);
-     em.getTransaction().commit();
+      loyaltyAccount = em.find(LoyaltyScheme.class, accountNo);
+      em.getTransaction().begin();
+      loyaltyAccount.setLoyaltyPoints(points);
+      em.getTransaction().commit();
     } catch (Exception ex) {
       ex.printStackTrace();
     } finally {
       em.close();
-    }  
+    }
   }
 
   public boolean persist(Object object) {
@@ -199,25 +199,25 @@ public class Database {
     }
     return false;
   }
-  
+
   public void updateGameStock(Game item, int newStock) {
-      Game orderedGame = null;
-      EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("JPU");
-      EntityManager entityManager = entityManagerFactory.createEntityManager();
-      try {
-          orderedGame = entityManager.find(Game.class, item.getBarcodeGS1());
-          entityManager.getTransaction().begin();
-          orderedGame.setStock(newStock);
-          entityManager.getTransaction().commit();
-      } catch (Exception e) {
-          e.printStackTrace();
-	  entityManager.getTransaction().rollback();
-      } finally {
-          entityManager.close();
-      }        
+    Game orderedGame = null;
+    EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("JPU");
+    EntityManager entityManager = entityManagerFactory.createEntityManager();
+    try {
+      orderedGame = entityManager.find(Game.class, item.getBarcodeGS1());
+      entityManager.getTransaction().begin();
+      orderedGame.setStock(newStock);
+      entityManager.getTransaction().commit();
+    } catch (Exception e) {
+      e.printStackTrace();
+      entityManager.getTransaction().rollback();
+    } finally {
+      entityManager.close();
+    }
   }
-  
-  public Game findGame (String gameBarcode) {
+
+  public Game findGame(String gameBarcode) {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPU");
     EntityManager em = emf.createEntityManager();
     Game game = null;
@@ -232,8 +232,8 @@ public class Database {
     }
     return game;
   }
-  
-  public void updateGame (Game game) {
+
+  public void updateGame(Game game) {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPU");
     EntityManager em = emf.createEntityManager();
     try {
@@ -254,5 +254,5 @@ public class Database {
       em.close();
     }
   }
-  
+
 }
