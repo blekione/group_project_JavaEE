@@ -101,13 +101,15 @@ public class StoreServlet extends HttpServlet {
 		int cvc = Integer.parseInt(request.getParameter("cvc"));
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 		double total = cart.getTotal();
+		LoyaltyManager lm = new LoyaltyManager();
+		Customer customer = (Customer) session.getAttribute("customer");
 		if (request.getParameter("redeem") != null && request.getParameter("redeem").equals("true")) {
-			//redeem points from total
+			total -= lm.getLoyaltyPoints(customer.getLoyaltyAccount()) * 0.01d;
+			lm.updateLoyaltyPoints(customer.getLoyaltyAccount(), 0);
 		}
 		BankManager bm = new BankManager();
 		if (bm.verifyPayment(cardNo, cvc) == 1) { // if bank account verified
 			if (bm.deductBalance(cardNo, total) == 1) {
-				Customer customer = (Customer) session.getAttribute("customer");
 				List<OrderItem> cartItems = cart.getBasket();
 				Order order = new Order(cartItems, customer);
 				customer.createOrderList(); // TODO delete when orders are implemented into database
@@ -122,9 +124,7 @@ public class StoreServlet extends HttpServlet {
 				request.getRequestDispatcher("WEB-INF/jsp/view/orderFailed.jsp")
 				.forward(request, response);
 			}
-		} else {
-			LoyaltyManager lm = new LoyaltyManager();
-			Customer customer = (Customer) session.getAttribute("customer");
+		} else {		
 			request.setAttribute("loyaltyPoints", lm.getLoyaltyPoints(customer.getLoyaltyAccount()));
 			request.setAttribute("total", total);
 			request.setAttribute("detailsCheckFail", true);
