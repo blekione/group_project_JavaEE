@@ -7,6 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import loyalty_scheme.LoyaltyScheme;
+import payment.BankAccount;
 
 public class Database {
 
@@ -270,6 +271,40 @@ public class Database {
       em.close();
     }
     return customers;
+  }
+  
+  public  BankAccount getBankAccount(String cardNumber) {
+	    EntityManagerFactory emf = javax.persistence.Persistence
+	            .createEntityManagerFactory("JPU");
+	    EntityManager em = emf.createEntityManager();
+	    BankAccount account = null;
+	    try {
+	      em.getTransaction().begin();
+	      account = em.find(BankAccount.class, cardNumber);
+	    } catch (Exception ex) {
+	    	ex.printStackTrace();
+	    } finally {
+	    	em.close();
+	    }
+	    return account;
+	  }
+
+  public void updateBankAccountBalance(String cardNumber, double newBalance) {
+	EntityManagerFactory emf = javax.persistence.Persistence
+            .createEntityManagerFactory("JPU");
+    EntityManager em = emf.createEntityManager();
+    BankAccount account = null;
+    try {
+      em.getTransaction().begin();
+      account = em.find(BankAccount.class, cardNumber);
+      account.setBalance(newBalance);
+      em.getTransaction().commit();
+    } catch (Exception ex) {
+    	ex.printStackTrace();
+    } finally {
+    	em.close();
+    }	
+	
   }
 
 }

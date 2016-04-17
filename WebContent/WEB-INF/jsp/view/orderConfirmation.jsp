@@ -1,0 +1,1 @@
+your order was placed successfully. Return to home page <a href="<c:url value="/store" />" >Home</a>

@@ -19,6 +19,8 @@ import domain.Store;
 import domain.enumerations.Platform;
 import domain.enumerations.Title;
 import loyalty_scheme.LoyaltyManager;
+import payment.BankAccount;
+import payment.BankManager;
 import supplier_interface.StockManager;
 
 import java.util.ArrayList;
@@ -94,24 +96,40 @@ public class StoreServlet extends HttpServlet {
 	}
 
 	private void proceedPayment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO add logic to check for payment acceptance
-		System.out.println(request.getParameter("redeem"));
-		if (true) { // if payment accepted
-			Customer customer = (Customer) session.getAttribute("customer");
-			ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
-			List<OrderItem> cartItems = cart.getBasket();
-			Order order = new Order(cartItems, customer);
-			customer.createOrderList(); // TODO delete when orders are implemented into database
-			customer.addOrder(order);
-			store.procedOrder(order);
-			store.notifyObservers(order);
-			session.setAttribute("cart", null);
-			request.setAttribute("paymentStatus", true);
-			request.getRequestDispatcher("WEB-INF/jsp/view/main.jsp")
-			.forward(request, response);
+		
+		String cardNo = request.getParameter("cardNumber");
+		int cvc = Integer.parseInt(request.getParameter("cvc"));
+		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+		double total = cart.getTotal();
+		if (request.getParameter("redeem") != null && request.getParameter("redeem").equals("true")) {
+			//redeem points from total
 		}
-		else {
-			//TODO redirect to page with information about payment failure
+		BankManager bm = new BankManager();
+		if (bm.verifyPayment(cardNo, cvc) == 1) { // if bank account verified
+			if (bm.deductBalance(cardNo, total) == 1) {
+				Customer customer = (Customer) session.getAttribute("customer");
+				List<OrderItem> cartItems = cart.getBasket();
+				Order order = new Order(cartItems, customer);
+				customer.createOrderList(); // TODO delete when orders are implemented into database
+				customer.addOrder(order);
+				store.procedOrder(order);
+				store.notifyObservers(order);
+				session.setAttribute("cart", null);
+				request.setAttribute("paymentStatus", true);
+				request.getRequestDispatcher("WEB-INF/jsp/view/orderConfirmation.jsp")
+				.forward(request, response);
+			} else {
+				request.getRequestDispatcher("WEB-INF/jsp/view/orderFailed.jsp")
+				.forward(request, response);
+			}
+		} else {
+			LoyaltyManager lm = new LoyaltyManager();
+			Customer customer = (Customer) session.getAttribute("customer");
+			request.setAttribute("loyaltyPoints", lm.getLoyaltyPoints(customer.getLoyaltyAccount()));
+			request.setAttribute("total", total);
+			request.setAttribute("detailsCheckFail", true);
+			request.getRequestDispatcher("WEB-INF/jsp/view/checkout.jsp")
+			.forward(request, response);
 		}
 		
 	}
@@ -128,6 +146,7 @@ public class StoreServlet extends HttpServlet {
 			request.setAttribute("total", total);
 			checkoutPass = true;
 		}
+		request.setAttribute("detailsCheckFail", false);
 		request.setAttribute("checkoutPass", checkoutPass);
 		request.getRequestDispatcher("WEB-INF/jsp/view/checkout.jsp")
 		.forward(request, response);

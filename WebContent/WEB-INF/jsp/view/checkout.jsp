@@ -1,6 +1,8 @@
 <%--@elvariable id="checkoutPass" type="domain.Customer"--%>
 <%--@elvariable id="total" type="java.lang.Double"--%>
 <%--@elvariable id="loyaltyPoints" type="java.lang.Integer"--%>
+<%--@elvariable id="detailsCheckFail" type="java.lang.Boolean"--%>
+
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -45,6 +47,9 @@
 		</div>
 	</c:when>
 	<c:otherwise>
+		<c:if test="${detailsCheckFail}">
+			<div>bleasfgafgafgadfgdfg</div>
+		</c:if>
 		<div class="row">
 			<div class="col col-md-6">
 				<div class="panel panel-info">
@@ -65,7 +70,7 @@
      					 		<label for="inputCardNUmber" class="col-sm-3 control-label">Card Number</label>
       							<div class="col-sm-5">
       								<div class="input-group">
-        							<input type="text" class="form-control" id="inputCardNUmber" placeholder="Card Number" name="cardholderName" />
+        							<input type="text" class="form-control" id="inputCardNUmber" placeholder="Card Number" name="cardNumber" />
         							<span class="input-group-addon"><i class="glyphicon glyphicon-credit-card"></i></span>
         							</div>
       							</div>
@@ -73,7 +78,7 @@
     						<div class="form-group">
      					 		<label for="inputCVC" class="col-sm-3 control-label">CVC</label>
       							<div class="col-sm-5">
-        							<input type="text" class="form-control" id="inputCVC" placeholder="Card Verification Code" name="cardholderName" />
+        							<input type="text" class="form-control" id="inputCVC" placeholder="Card Verification Code" name="cvc" />
       							</div>
     						</div>
     						<div class="form-group">
