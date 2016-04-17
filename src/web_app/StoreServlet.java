@@ -95,6 +95,7 @@ public class StoreServlet extends HttpServlet {
 
 	private void proceedPayment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO add logic to check for payment acceptance
+		System.out.println(request.getParameter("redeem"));
 		if (true) { // if payment accepted
 			Customer customer = (Customer) session.getAttribute("customer");
 			ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
@@ -121,6 +122,9 @@ public class StoreServlet extends HttpServlet {
 		} else {
 			ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 			double total = cart.getTotal();
+			Customer customer = (Customer) session.getAttribute("customer");
+			LoyaltyManager lm = new LoyaltyManager();
+			request.setAttribute("loyaltyPoints", lm.getLoyaltyPoints(customer.getLoyaltyAccount()));
 			request.setAttribute("total", total);
 			checkoutPass = true;
 		}
@@ -230,7 +234,7 @@ public class StoreServlet extends HttpServlet {
   }
 
 	private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		session.setAttribute("customer", null);
+		session.invalidate();
 		response.sendRedirect("store");
 	}
 

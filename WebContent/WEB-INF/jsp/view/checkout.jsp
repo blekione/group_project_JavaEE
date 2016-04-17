@@ -1,5 +1,6 @@
 <%--@elvariable id="checkoutPass" type="domain.Customer"--%>
 <%--@elvariable id="total" type="java.lang.Double"--%>
+<%--@elvariable id="loyaltyPoints" type="java.lang.Integer"--%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -113,8 +114,16 @@
         						</div>
         					</div>
         					<div class="form-group">
-      							<div class="col-sm-offset-2 col-sm-10">
-        							<button type="submit" class="btn btn-primary">Proceed Payment</button>
+        						<p class="alert alert-info text-center">You have <b>${loyaltyPoints}</b> loyalty points worth <b>&#163;${loyaltyPoints * 0.01}</b></p> 	
+     					 		<label for="checkRedeem" class="col-sm-4 control-label">Redeem your points</label>
+      							<div class="col-sm-1">
+        							<input type="checkbox" class="form-control" id="checkRedeem" name="redeem" value="true"/>
+      							</div>
+    						</div>
+        					
+        					<div class="form-group">
+      							<div class="col-sm-12">
+        							<button type="submit" class="btn btn-primary btn-block">Proceed Payment</button>
       							</div>
    							</div>
     					</form>
