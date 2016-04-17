@@ -98,7 +98,10 @@ public class StoreServlet extends HttpServlet {
 	private void proceedPayment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String cardNo = request.getParameter("cardNumber");
-		int cvc = Integer.parseInt(request.getParameter("cvc"));
+		int cvc = 0;
+		if (!request.getParameter("cvc").equals("")){
+			cvc = Integer.parseInt(request.getParameter("cvc"));
+		}
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 		double total = cart.getTotal();
 		LoyaltyManager lm = new LoyaltyManager();

@@ -48,7 +48,7 @@
 	</c:when>
 	<c:otherwise>
 		<c:if test="${detailsCheckFail}">
-			<div>bleasfgafgafgadfgdfg</div>
+			<div class="alert alert-warning" role="alert"><b>Warning!</b> You have entered wrong card details. Please try again</div>
 		</c:if>
 		<div class="row">
 			<div class="col col-md-6">
@@ -87,7 +87,7 @@
           							<div class="row">
            								<div class="col-xs-3">
               								<select class="form-control col-sm-2" name="expiryMonth" id="selectExpiryMonth">
-                								<option>Month</option>
+                								<option value="00">Month</option>
                 								<option value="01">Jan (01)</option>
                 								<option value="02">Feb (02)</option>
                 								<option value="03">Mar (03)</option>
@@ -104,7 +104,7 @@
 	            						</div>
 	            						<div class="col-xs-3">
 	              							<select class="form-control" name="selectExpiryYear">
-	                                			<option>Year</option>
+	                                			<option value="0">Year</option>
 	                                			<option value="16">2016</option>
 	                							<option value="17">2017</option>
 	                							<option value="18">2018</option>

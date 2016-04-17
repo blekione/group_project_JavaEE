@@ -1,1 +1,2 @@
-Unfortunatelly we couldn't process your order. It may be that you have not sufficient amount of money on your account. Please check with your bank.  Return to home page <a href="<c:url value="/store" />" >Home</a>
+<div class="alert alert-danger" role="alert"><b>Warning!!</b> Unfortunately we couldn't process your order. It may be that you have not sufficient amount of money on your account. Please check with your bank.</div>
+<a class="btn btn-primary" href="<c:url value="/store" />" >Return to Home Page</a>

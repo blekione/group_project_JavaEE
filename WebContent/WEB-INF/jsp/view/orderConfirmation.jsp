@@ -1,1 +1,2 @@
-your order was placed successfully. Return to home page <a href="<c:url value="/store" />" >Home</a>
+<div class="alert alert-success" role="alert"><b>Well done!!</b> Your order was placed successfully and will be sent to you soon.</div>
+<a class="btn btn-success" href="<c:url value="/store" />" >Return to Home Page</a>
