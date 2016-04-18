@@ -12,8 +12,8 @@ import payment.BankAccount;
 public class Database {
 
   /**
-   * A method to fetch all games currently stored on the database, regardless of
-   * their platform or any other criteria.
+   * A method to fetch all games currently stored on the database, regardless of their platform or
+   * any other criteria.
    *
    * @return a list containing all games on the database.
    * @throws NullPointerException
@@ -254,7 +254,7 @@ public class Database {
       em.close();
     }
   }
-  
+
   public List<Customer> retrieveCustomers() {
     EntityManagerFactory emf = javax.persistence.Persistence
             .createEntityManagerFactory("JPU");
@@ -272,25 +272,25 @@ public class Database {
     }
     return customers;
   }
-  
-  public  BankAccount getBankAccount(String cardNumber) {
-	    EntityManagerFactory emf = javax.persistence.Persistence
-	            .createEntityManagerFactory("JPU");
-	    EntityManager em = emf.createEntityManager();
-	    BankAccount account = null;
-	    try {
-	      em.getTransaction().begin();
-	      account = em.find(BankAccount.class, cardNumber);
-	    } catch (Exception ex) {
-	    	ex.printStackTrace();
-	    } finally {
-	    	em.close();
-	    }
-	    return account;
-	  }
+
+  public BankAccount getBankAccount(String cardNumber) {
+    EntityManagerFactory emf = javax.persistence.Persistence
+            .createEntityManagerFactory("JPU");
+    EntityManager em = emf.createEntityManager();
+    BankAccount account = null;
+    try {
+      em.getTransaction().begin();
+      account = em.find(BankAccount.class, cardNumber);
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    } finally {
+      em.close();
+    }
+    return account;
+  }
 
   public void updateBankAccountBalance(String cardNumber, double newBalance) {
-	EntityManagerFactory emf = javax.persistence.Persistence
+    EntityManagerFactory emf = javax.persistence.Persistence
             .createEntityManagerFactory("JPU");
     EntityManager em = emf.createEntityManager();
     BankAccount account = null;
@@ -300,11 +300,10 @@ public class Database {
       account.setBalance(newBalance);
       em.getTransaction().commit();
     } catch (Exception ex) {
-    	ex.printStackTrace();
+      ex.printStackTrace();
     } finally {
-    	em.close();
-    }	
-	
+      em.close();
+    }
   }
 
 }

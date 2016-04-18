@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import domain.enumerations.Platform;
-import domain.enumerations.Title;
+import loyalty_scheme.LoyaltyScheme;
 
 public class Store {
 
@@ -32,6 +32,10 @@ public class Store {
       database = new Database();
     }
     return database;
+  }
+  
+  public LoyaltyScheme getLoyalty(String id) {
+    return database.retrieveLoyaltyAccount(id); 
   }
 
   public List<Game> getDiscountedGames() {

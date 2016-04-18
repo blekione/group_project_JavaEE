@@ -19,7 +19,7 @@ import domain.Store;
 import domain.enumerations.Platform;
 import domain.enumerations.Title;
 import loyalty_scheme.LoyaltyManager;
-import payment.BankAccount;
+import loyalty_scheme.LoyaltyScheme;
 import payment.BankManager;
 import supplier_interface.StockManager;
 
@@ -89,11 +89,31 @@ public class StoreServlet extends HttpServlet {
 		case "proceed-payment":
 			proceedPayment(request, response);
 			return;
+                case "accountOverview":
+                    accountOverview(request, response);
+                    return;
 		case "main":
 		default:
 			listDiscountGamesMain(request, response);
 		}
 	}
+        
+        private void accountOverview(HttpServletRequest request, HttpServletResponse response) 
+                throws ServletException, IOException {
+          Customer customer = null;
+          LoyaltyScheme loyalty = null;
+          if (session != null) {
+            customer = (Customer) session.getAttribute("customer");
+            if (!customer.getLoyaltyAccount().equals("")) {
+              loyalty = store.getLoyalty(customer.getLoyaltyAccount());
+            }
+          }
+          
+          request.setAttribute("loyalty", loyalty);
+          request.setAttribute("customer", customer);
+          request.getRequestDispatcher("WEB-INF/jsp/view/accountOverview.jsp")
+			.forward(request, response);
+        }
 
 	private void proceedPayment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
