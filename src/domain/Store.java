@@ -127,6 +127,7 @@ public class Store {
 	for (OrderItem orderItem : order.getOrderItems()) {
 		Game game = orderItem.getItem();
 		int newStock = game.getStock() - orderItem.getQuantity();
+		game.setStock(newStock);
 		database.updateGameStock(game, newStock);
 	}
 	

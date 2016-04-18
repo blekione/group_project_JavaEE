@@ -33,7 +33,7 @@
 					</c:choose>
 					<p>
 						<c:choose>
-							<c:when test="${game.getStock() <= 5}">
+							<c:when test="${game.getStock() <= 8}">
 								<span class="text-danger">Only ${game.getStock()} left.</span>
 							</c:when>
 							<c:otherwise>
